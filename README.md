@@ -73,7 +73,7 @@ solutions = [
 4. Checkout to specific commits where the patchset are based on.
 ```
 $ cd ~/chromium/src
-$ git checkout 6c5fd93a02e79
+$ git checkout ea07d52ad103a
 
 ```
 
@@ -124,7 +124,17 @@ $ cd ~/chromium/src
 $ git am <patch>
 ```
 
-8. Setup ffmpeg.
+8. Apply the patches in the untracked folder. This is due to third_party components are not tracked under the same git history.
+
+NOTE: There is no script to help in this yet. So we have to run patch command manually in the respective folders.
+
+TODO: Add a script to help user to patch these patches for third_party components.
+```
+$ cd third_party/<component>
+$ patch -p1 < ~/riscv64-chromium-dev/third_party/XXX.patch
+```
+
+9. Setup ffmpeg.
 ```
 $ cd third_party/ffmpeg
 $ ./chromium/scripts/build_ffmpeg.py linux riscv64
