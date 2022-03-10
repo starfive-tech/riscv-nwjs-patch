@@ -1,0 +1,36 @@
+From 474b49f9266726caafe5975c3d0bbed7e917ecaa Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Thu, 13 Jan 2022 08:51:04 +0000
+Subject: [PATCH 03/23] third_party: zlib: do not mangle zlib
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ third_party/zlib/zconf.h | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/third_party/zlib/zconf.h b/third_party/zlib/zconf.h
+index 2d1d03ff951c9..cf54129aa6bca 100644
+--- a/third_party/zlib/zconf.h
++++ b/third_party/zlib/zconf.h
+@@ -8,18 +8,6 @@
+ #ifndef ZCONF_H
+ #define ZCONF_H
+ 
+-/*
+- * This library is also built as a part of AOSP, which does not need to include
+- * chromeconf.h. This config does not want chromeconf.h, so it can set this
+- * macro to opt out. While this works today, there's no guarantee that building
+- * zlib outside of Chromium keeps working in the future.
+- */
+-#if !defined(CHROMIUM_ZLIB_NO_CHROMECONF)
+-/* This include does prefixing as below, but with an updated set of names.  Also
+- * sets up export macros in component builds. */
+-#include "chromeconf.h"
+-#endif
+-
+ /*
+  * If you *really* need a unique prefix for all types and library functions,
+  * compile with -DZ_PREFIX. The "standard" zlib should be compiled without it.
+-- 
+2.25.1
+

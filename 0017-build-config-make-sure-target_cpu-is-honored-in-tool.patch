@@ -1,0 +1,27 @@
+From 9b8737d80616b7346723442d6c247dedda3448b7 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 14 Jan 2022 07:30:10 +0000
+Subject: [PATCH 17/23] build: config: make sure target_cpu is honored in
+ toolchain settings
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/BUILDCONFIG.gn | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/config/BUILDCONFIG.gn b/build/config/BUILDCONFIG.gn
+index 75eb6fd89037a..8da1c0ce8e66c 100644
+--- a/build/config/BUILDCONFIG.gn
++++ b/build/config/BUILDCONFIG.gn
+@@ -193,7 +193,7 @@ if (host_toolchain == "") {
+     if (target_os != "linux") {
+       host_toolchain = "//build/toolchain/linux:clang_$host_cpu"
+     } else if (is_clang) {
+-      host_toolchain = "//build/toolchain/linux:clang_$host_cpu"
++      host_toolchain = "//build/toolchain/linux:clang_$target_cpu"
+     } else {
+       host_toolchain = "//build/toolchain/linux:$host_cpu"
+     }
+-- 
+2.25.1
+

@@ -1,0 +1,551 @@
+From 1b9a2c39a04e3c1066ec9bf0e2a66abec0f95ea6 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 14 Jan 2022 09:07:44 +0000
+Subject: [PATCH 20/23] media: media_options: disable dav1d decoder
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ media/BUILD.gn                                |   1 -
+ media/DEPS                                    |   1 -
+ .../clear_key_cdm/cdm_video_decoder.cc        |   4 -
+ media/filters/BUILD.gn                        |  12 -
+ media/filters/dav1d_video_decoder.cc          |   5 -
+ media/filters/dav1d_video_decoder_unittest.cc |   1 -
+ media/gpu/video_decode_accelerator_tests.cc   |   4 +-
+ media/media_options.gni                       |   2 +-
+ media/renderers/default_decoder_factory.cc    |   4 -
+ media/test/pipeline_integration_test_base.cc  |   4 -
+ media/video/software_video_encoder_test.cc    |   3 -
+ third_party/dav1d/BUILD.gn                    | 325 ------------------
+ third_party/libavif/BUILD.gn                  |   7 -
+ 13 files changed, 2 insertions(+), 371 deletions(-)
+ delete mode 100644 third_party/dav1d/BUILD.gn
+
+diff --git a/media/BUILD.gn b/media/BUILD.gn
+index 6f9683b4a2672..0cd92a3dae681 100644
+--- a/media/BUILD.gn
++++ b/media/BUILD.gn
+@@ -25,7 +25,6 @@ buildflag_header("media_buildflags") {
+     "ENABLE_CAST_AUDIO_RENDERER=$enable_cast_audio_renderer",
+     "ENABLE_CDM_HOST_VERIFICATION=$enable_cdm_host_verification",
+     "ENABLE_CDM_STORAGE_ID=$enable_cdm_storage_id",
+-    "ENABLE_DAV1D_DECODER=$enable_dav1d_decoder",
+     "ENABLE_AV1_DECODER=$enable_av1_decoder",
+     "ENABLE_PLATFORM_DOLBY_VISION=$enable_platform_dolby_vision",
+     "ENABLE_FFMPEG=$media_use_ffmpeg",
+diff --git a/media/DEPS b/media/DEPS
+index 0cd29bc8f5937..1df25ca17aa75 100644
+--- a/media/DEPS
++++ b/media/DEPS
+@@ -15,7 +15,6 @@ include_rules = [
+   "+services/viz/public/cpp/gpu/context_provider_command_buffer.h",
+   "+skia/ext",
+   "+third_party/re2",
+-  "+third_party/dav1d",
+   "+third_party/ffmpeg",
+   "+third_party/libaom",
+   "+third_party/libdrm",
+diff --git a/media/cdm/library_cdm/clear_key_cdm/cdm_video_decoder.cc b/media/cdm/library_cdm/clear_key_cdm/cdm_video_decoder.cc
+index 15166819bdb7c..83f614e0720ee 100644
+--- a/media/cdm/library_cdm/clear_key_cdm/cdm_video_decoder.cc
++++ b/media/cdm/library_cdm/clear_key_cdm/cdm_video_decoder.cc
+@@ -35,10 +35,6 @@
+ #include "media/filters/vpx_video_decoder.h"
+ #endif
+ 
+-#if BUILDFLAG(ENABLE_DAV1D_DECODER)
+-#include "media/filters/dav1d_video_decoder.h"
+-#endif
+-
+ #if BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
+ #include "media/filters/ffmpeg_video_decoder.h"
+ #endif
+diff --git a/media/filters/BUILD.gn b/media/filters/BUILD.gn
+index e9e4fa9b5b5e2..4430d7edf7d65 100644
+--- a/media/filters/BUILD.gn
++++ b/media/filters/BUILD.gn
+@@ -137,14 +137,6 @@ source_set("filters") {
+     deps += [ "//third_party/libvpx" ]
+   }
+ 
+-  if (enable_dav1d_decoder) {
+-    sources += [
+-      "dav1d_video_decoder.cc",
+-      "dav1d_video_decoder.h",
+-    ]
+-    deps += [ "//third_party/dav1d" ]
+-  }
+-
+   if (enable_libgav1_decoder) {
+     sources += [
+       "gav1_video_decoder.cc",
+@@ -371,10 +363,6 @@ source_set("unit_tests") {
+     sources += [ "vpx_video_decoder_unittest.cc" ]
+   }
+ 
+-  if (enable_dav1d_decoder) {
+-    sources += [ "dav1d_video_decoder_unittest.cc" ]
+-  }
+-
+   if (enable_libgav1_decoder) {
+     sources += [ "gav1_video_decoder_unittest.cc" ]
+   }
+diff --git a/media/filters/dav1d_video_decoder.cc b/media/filters/dav1d_video_decoder.cc
+index 830b6bd4b11e6..2b7a3242b1199 100644
+--- a/media/filters/dav1d_video_decoder.cc
++++ b/media/filters/dav1d_video_decoder.cc
+@@ -2,8 +2,6 @@
+ // Use of this source code is governed by a BSD-style license that can be
+ // found in the LICENSE file.
+ 
+-#include "media/filters/dav1d_video_decoder.h"
+-
+ #include <memory>
+ #include <string>
+ #include <utility>
+@@ -21,9 +19,6 @@
+ #include "media/base/video_aspect_ratio.h"
+ #include "media/base/video_util.h"
+ 
+-extern "C" {
+-#include "third_party/dav1d/libdav1d/include/dav1d/dav1d.h"
+-}
+ 
+ namespace media {
+ 
+diff --git a/media/filters/dav1d_video_decoder_unittest.cc b/media/filters/dav1d_video_decoder_unittest.cc
+index 676a02b8ad3a0..541b7ffca7f92 100644
+--- a/media/filters/dav1d_video_decoder_unittest.cc
++++ b/media/filters/dav1d_video_decoder_unittest.cc
+@@ -20,7 +20,6 @@
+ #include "media/base/test_helpers.h"
+ #include "media/base/video_frame.h"
+ #include "media/ffmpeg/ffmpeg_common.h"
+-#include "media/filters/dav1d_video_decoder.h"
+ #include "media/filters/in_memory_url_protocol.h"
+ #include "testing/gmock/include/gmock/gmock.h"
+ 
+diff --git a/media/gpu/video_decode_accelerator_tests.cc b/media/gpu/video_decode_accelerator_tests.cc
+index bce49fb05f659..1d122ce1c0624 100644
+--- a/media/gpu/video_decode_accelerator_tests.cc
++++ b/media/gpu/video_decode_accelerator_tests.cc
+@@ -29,9 +29,7 @@
+ #include "media/media_buildflags.h"
+ #include "testing/gtest/include/gtest/gtest.h"
+ 
+-#if BUILDFLAG(ENABLE_DAV1D_DECODER)
+-#include "media/filters/dav1d_video_decoder.h"
+-#elif BUILDFLAG(ENABLE_LIBGAV1_DECODER)
++#if BUILDFLAG(ENABLE_LIBGAV1_DECODER)
+ #include "media/filters/gav1_video_decoder.h"
+ #endif
+ 
+diff --git a/media/media_options.gni b/media/media_options.gni
+index 4a230499ffa7d..36f39fc523725 100644
+--- a/media/media_options.gni
++++ b/media/media_options.gni
+@@ -74,7 +74,7 @@ declare_args() {
+   # On Fuchsia, these are logged as VLOGs.
+   enable_logging_override = is_chromecast || is_fuchsia
+ 
+-  enable_dav1d_decoder = !is_ios
++  enable_dav1d_decoder = false
+ 
+   # Enable browser managed persistent metadata storage for EME persistent
+   # session and persistent usage record session.
+diff --git a/media/renderers/default_decoder_factory.cc b/media/renderers/default_decoder_factory.cc
+index f077e56c7eccc..a3b7917d07a06 100644
+--- a/media/renderers/default_decoder_factory.cc
++++ b/media/renderers/default_decoder_factory.cc
+@@ -26,10 +26,6 @@
+ #include "media/filters/fuchsia/fuchsia_video_decoder.h"
+ #endif
+ 
+-#if BUILDFLAG(ENABLE_DAV1D_DECODER)
+-#include "media/filters/dav1d_video_decoder.h"
+-#endif
+-
+ #if BUILDFLAG(ENABLE_FFMPEG)
+ #include "media/filters/ffmpeg_audio_decoder.h"
+ #endif
+diff --git a/media/test/pipeline_integration_test_base.cc b/media/test/pipeline_integration_test_base.cc
+index 4afe60de61139..afad5ee5acfbf 100644
+--- a/media/test/pipeline_integration_test_base.cc
++++ b/media/test/pipeline_integration_test_base.cc
+@@ -27,10 +27,6 @@
+ #include "media/test/fake_encrypted_media.h"
+ #include "media/test/test_media_source.h"
+ 
+-#if BUILDFLAG(ENABLE_DAV1D_DECODER)
+-#include "media/filters/dav1d_video_decoder.h"
+-#endif
+-
+ #if BUILDFLAG(ENABLE_FFMPEG)
+ #include "media/filters/ffmpeg_audio_decoder.h"
+ #include "media/filters/ffmpeg_demuxer.h"
+diff --git a/media/video/software_video_encoder_test.cc b/media/video/software_video_encoder_test.cc
+index 21d7ccc59cd93..a72ec4aeb9562 100644
+--- a/media/video/software_video_encoder_test.cc
++++ b/media/video/software_video_encoder_test.cc
+@@ -43,9 +43,6 @@
+ #include "media/video/av1_video_encoder.h"
+ #endif
+ 
+-#if BUILDFLAG(ENABLE_DAV1D_DECODER)
+-#include "media/filters/dav1d_video_decoder.h"
+-#endif
+ 
+ namespace media {
+ 
+diff --git a/third_party/dav1d/BUILD.gn b/third_party/dav1d/BUILD.gn
+deleted file mode 100644
+index 933c8f2f566aa..0000000000000
+--- a/third_party/dav1d/BUILD.gn
++++ /dev/null
+@@ -1,325 +0,0 @@
+-# Copyright 2019 The Chromium Authors. All rights reserved.
+-# Use of this source code is governed by a BSD-style license that can be
+-# found in the LICENSE file.
+-
+-import("dav1d_generated.gni")
+-
+-import("//build/config/compiler/compiler.gni")
+-import("//build/config/sanitizers/sanitizers.gni")
+-import("//third_party/nasm/nasm_assemble.gni")
+-
+-# MemorySanitizer can't handle assembly, https://crbug.com/928357.
+-enable_nasm = (current_cpu == "x86" || current_cpu == "x64") && !is_msan
+-
+-if (is_win) {
+-  platform_config_root = "config/win/$current_cpu"
+-} else if (is_msan) {
+-  assert(current_cpu == "x64" && (is_linux || is_chromeos),
+-         "Only Linux X64 MSAN is supported")
+-  platform_config_root = "config/linux-noasm/$current_cpu"
+-} else {
+-  # Linux configuration files seem to work on Mac, so just reuse them.
+-  platform_config_root = "config/linux/$current_cpu"
+-}
+-
+-# Clang LTO doesn't respect stack alignment and clang-cl doesn't support setting
+-# the stack alignment, so we must use the platform's default alignment in those
+-# cases; https://crbug.com/928743.
+-if (current_cpu == "x86" || current_cpu == "x64") {
+-  if (use_thin_lto || is_win) {
+-    needs_stack_alignment = false
+-    # The defaults are stack_alignment=4 for x86 and stack_alignment=16 for x64.
+-  } else {
+-    # The compiler flags, as well as the stack alignment values, all mirror
+-    # upstream's meson.build setup:
+-    # https://chromium.googlesource.com/external/github.com/videolan/dav1d/+/master/meson.build
+-    needs_stack_alignment = true
+-    if (current_cpu == "x86") {
+-      stack_alignment = 16
+-
+-      if (!is_clang) {
+-        # Values used by GCC.
+-        preferred_stack_boundary = 4
+-        incoming_stack_boundary = 2
+-      }
+-    } else if (current_cpu == "x64") {
+-      stack_alignment = 32
+-
+-      if (!is_clang) {
+-        # Values used by GCC.
+-        preferred_stack_boundary = 5
+-        incoming_stack_boundary = 4
+-      }
+-    }
+-
+-    if (is_clang) {
+-      stackalign_flag = "-mstack-alignment=$stack_alignment"
+-      stackrealign_flag = "-mstackrealign"
+-    } else {
+-      # Assume GCC for now.
+-      stackalign_flag = "-mpreferred-stack-boundary=$preferred_stack_boundary"
+-      stackrealign_flag = "-mincoming-stack-boundary=$incoming_stack_boundary"
+-    }
+-  }
+-} else {
+-  needs_stack_alignment = false
+-}
+-
+-config("public_dav1d_config") {
+-  include_dirs = [ "version" ]
+-
+-  # Disable internal dav1d logs in the official build to save storage.
+-  if (is_official_build) {
+-    defines = [ "CONFIG_LOG=0" ]
+-  } else {
+-    defines = [ "CONFIG_LOG=1" ]
+-  }
+-
+-  if (needs_stack_alignment) {
+-    defines += [ "STACK_ALIGNMENT=$stack_alignment" ]
+-  }
+-
+-  if (!is_android && !is_win) {
+-    defines += [ "HAVE_PTHREAD_GETAFFINITY_NP=1" ]
+-  }
+-
+-  # Don't let dav1d export any symbols. Otherwise the verify_order step on macOS
+-  # can fail since these exports end up in the final Chromium binary.
+-  defines += [ "DAV1D_API=" ]
+-}
+-
+-config("dav1d_config") {
+-  configs = [ ":public_dav1d_config" ]
+-  include_dirs = [
+-    "libdav1d",
+-    "libdav1d/include",
+-    "libdav1d/include/dav1d",
+-    platform_config_root,
+-  ]
+-  if (is_win && !is_clang) {
+-    include_dirs += [ "libdav1d/include/compat/msvc" ]
+-  }
+-}
+-
+-dav1d_copts = [
+-  "-D_FILE_OFFSET_BITS=64",
+-  "-D_POSIX_C_SOURCE=200112L",
+-]
+-
+-if (is_win) {
+-  if (!is_clang) {
+-    dav1d_copts += [ "/wd4028" ]
+-  }
+-} else {
+-  dav1d_copts += [ "-std=c99" ]
+-  if (needs_stack_alignment) {
+-    dav1d_copts += [ stackalign_flag ]
+-  }
+-  if (is_mac || is_ios) {
+-    dav1d_copts += [ "-D_DARWIN_C_SOURCE" ]
+-  }
+-  if (is_linux || is_chromeos || is_android || current_os == "aix") {
+-    if (!is_clang) {
+-      dav1d_copts += [ "-D_GNU_SOURCE" ]
+-    }
+-  }
+-}
+-
+-if (enable_nasm) {
+-  nasm_assemble("dav1d_asm") {
+-    sources = x86_asm_sources
+-
+-    inputs = [
+-      "libdav1d/src/ext/x86/x86inc.asm",
+-      "$platform_config_root/config.asm",
+-    ]
+-
+-    include_dirs = [
+-      "libdav1d/src/",
+-      platform_config_root,
+-    ]
+-
+-    nasm_flags = [
+-      "-P",
+-      rebase_path("$platform_config_root/config.asm", root_build_dir),
+-    ]
+-
+-    defines = []
+-    if (needs_stack_alignment) {
+-      defines += [ "STACK_ALIGNMENT=$stack_alignment" ]
+-    }
+-
+-    # Necessary to ensure macOS symbols end up with a _ prefix.
+-    if (is_mac || is_ios) {
+-      defines += [ "PREFIX" ]
+-    }
+-  }
+-}
+-
+-source_set("dav1d_headers") {
+-  configs -= [ "//build/config/compiler:chromium_code" ]
+-  configs += [
+-    "//build/config/compiler:no_chromium_code",
+-    ":dav1d_config",
+-  ]
+-
+-  sources = c_headers
+-}
+-
+-static_library("dav1d_entrypoints") {
+-  configs -= [ "//build/config/compiler:chromium_code" ]
+-  configs += [
+-    "//build/config/compiler:no_chromium_code",
+-    ":dav1d_config",
+-  ]
+-
+-  sources = entry_point_sources
+-  cflags = dav1d_copts
+-  if (is_win) {
+-    sources += [ "libdav1d/src/win32/thread.c" ]
+-  }
+-
+-  if (needs_stack_alignment) {
+-    cflags += [ stackrealign_flag ]
+-  }
+-
+-  deps = [ ":dav1d_headers" ]
+-}
+-
+-static_library("dav1d_8bit") {
+-  configs -= [ "//build/config/compiler:chromium_code" ]
+-  configs += [
+-    "//build/config/compiler:no_chromium_code",
+-    ":dav1d_config",
+-  ]
+-
+-  sources = template_sources
+-  if (current_cpu == "x86" || current_cpu == "x64") {
+-    sources += x86_template_sources
+-  } else if (current_cpu == "arm") {
+-    sources += arm_template_sources
+-  } else if (current_cpu == "arm64") {
+-    sources += arm_template_sources
+-  }
+-
+-  cflags = dav1d_copts
+-  cflags += [ "-DBITDEPTH=8" ]
+-
+-  deps = [ ":dav1d_headers" ]
+-}
+-
+-static_library("dav1d_10bit") {
+-  configs -= [
+-    "//build/config/compiler:chromium_code",
+-
+-    # Disable coverage for the 10 bit version to avoid confusing the
+-    # instrumentation about which version of the library is being run.
+-    # dav1d_10 bit was selected for this, as it's less used than dav1d_8bit,
+-    # which still has coverage enabled. See crbug.com/1030350.
+-    "//build/config/coverage:default_coverage",
+-  ]
+-  configs += [
+-    "//build/config/compiler:no_chromium_code",
+-    ":dav1d_config",
+-  ]
+-
+-  sources = template_sources
+-  if (current_cpu == "x86" || current_cpu == "x64") {
+-    sources += x86_template_sources
+-  } else if (current_cpu == "arm") {
+-    sources += arm_template_sources
+-  } else if (current_cpu == "arm64") {
+-    sources += arm_template_sources
+-  }
+-
+-  cflags = dav1d_copts
+-  cflags += [ "-DBITDEPTH=16" ]
+-
+-  deps = [ ":dav1d_headers" ]
+-}
+-
+-if (current_cpu == "x86" || current_cpu == "x64") {
+-  static_library("dav1d_x86") {
+-    sources = [
+-      "libdav1d/src/x86/cpu.c",
+-      "libdav1d/src/x86/cpu.h",
+-      "libdav1d/src/x86/refmvs_init.c",
+-    ]
+-
+-    # x86/msac.h redefines macros in msac.h if x86/msac.h is included and
+-    # HAVE_ASM is 0, so we must exclude msac_init.c if !enable_nasm. Also, it
+-    # is only used for x64.
+-    if (enable_nasm && current_cpu == "x64") {
+-      sources += [ "libdav1d/src/x86/msac_init.c" ]
+-    }
+-    configs -= [ "//build/config/compiler:chromium_code" ]
+-    configs += [
+-      "//build/config/compiler:no_chromium_code",
+-      ":dav1d_config",
+-    ]
+-    cflags = dav1d_copts
+-
+-    deps = [ ":dav1d_headers" ]
+-    allow_circular_includes_from = [ ":dav1d_headers" ]
+-  }
+-} else if (current_cpu == "arm" || current_cpu == "arm64") {
+-  static_library("dav1d_arm") {
+-    sources = [
+-      "libdav1d/src/arm/cpu.c",
+-      "libdav1d/src/arm/cpu.h",
+-      "libdav1d/src/arm/refmvs_init.c",
+-    ]
+-
+-    # These are not template based so should only be built once.
+-    if (current_cpu == "arm") {
+-      sources += arm32_asm_sources
+-    } else if (current_cpu == "arm64") {
+-      sources += arm64_asm_sources
+-    }
+-
+-    configs -= [ "//build/config/compiler:chromium_code" ]
+-    configs += [
+-      "//build/config/compiler:no_chromium_code",
+-      ":dav1d_config",
+-    ]
+-
+-    # Necessary to ensure macOS symbols end up with a _ prefix.
+-    if (is_mac || is_ios) {
+-      defines = [ "PREFIX" ]
+-    }
+-
+-    cflags = dav1d_copts
+-
+-    deps = [ ":dav1d_headers" ]
+-    allow_circular_includes_from = [ ":dav1d_headers" ]
+-  }
+-}
+-
+-static_library("dav1d") {
+-  sources = c_sources
+-
+-  configs -= [ "//build/config/compiler:chromium_code" ]
+-  configs += [
+-    "//build/config/compiler:no_chromium_code",
+-    ":dav1d_config",
+-  ]
+-  cflags = dav1d_copts
+-
+-  deps = [
+-    ":dav1d_10bit",
+-    ":dav1d_8bit",
+-    ":dav1d_entrypoints",
+-    ":dav1d_headers",
+-  ]
+-
+-  public_configs = [ ":public_dav1d_config" ]
+-
+-  if (current_cpu == "x86" || current_cpu == "x64") {
+-    deps += [ ":dav1d_x86" ]
+-    if (enable_nasm) {
+-      deps += [ ":dav1d_asm" ]
+-    }
+-  } else if (current_cpu == "arm" || current_cpu == "arm64") {
+-    deps += [ ":dav1d_arm" ]
+-  }
+-}
+diff --git a/third_party/libavif/BUILD.gn b/third_party/libavif/BUILD.gn
+index deaaaeea66c51..307df49faa3bc 100644
+--- a/third_party/libavif/BUILD.gn
++++ b/third_party/libavif/BUILD.gn
+@@ -31,13 +31,6 @@ source_set("libavif") {
+ 
+   deps = [ "//third_party/libyuv" ]
+ 
+-  if (enable_dav1d_decoder) {
+-    sources += [ "src/src/codec_dav1d.c" ]
+-    include_dirs += [ "../dav1d/libdav1d/include/" ]
+-    defines += [ "AVIF_CODEC_DAV1D" ]
+-    deps += [ "//third_party/dav1d" ]
+-  }
+-
+   if (enable_libgav1_decoder) {
+     sources += [ "src/src/codec_libgav1.c" ]
+     defines += [ "AVIF_CODEC_LIBGAV1" ]
+-- 
+2.25.1
+

@@ -1,0 +1,32 @@
+From b4fdef0117f02167c087e5f06e5c166a64fa969d Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Thu, 13 Jan 2022 02:33:08 +0000
+Subject: [PATCH 01/23] build: toolchain: allow clang on riscv64 target
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/toolchain/linux/BUILD.gn | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/build/toolchain/linux/BUILD.gn b/build/toolchain/linux/BUILD.gn
+index bc17e80e61353..648ca2493a925 100644
+--- a/build/toolchain/linux/BUILD.gn
++++ b/build/toolchain/linux/BUILD.gn
+@@ -290,6 +290,14 @@ gcc_toolchain("mips64el") {
+   }
+ }
+ 
++clang_toolchain("clang_riscv64") {
++  enable_linker_map = true
++  toolchain_args = {
++    current_cpu = "riscv64"
++    current_os = "linux"
++  }
++}
++
+ gcc_toolchain("riscv64") {
+   toolprefix = "riscv64-linux-gnu"
+ 
+-- 
+2.25.1
+

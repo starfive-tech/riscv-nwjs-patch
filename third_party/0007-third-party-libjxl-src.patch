@@ -1,0 +1,17 @@
+diff --git a/lib/jxl/base/arch_macros.h b/lib/jxl/base/arch_macros.h
+index a983019..fc5e9e0 100644
+--- a/lib/jxl/base/arch_macros.h
++++ b/lib/jxl/base/arch_macros.h
+@@ -28,6 +28,12 @@ namespace jxl {
+ #define JXL_ARCH_ARM 0
+ #endif
+ 
++#if defined(__riscv)
++#define JXL_ARCH_RISCV64 1
++#else
++#define JXL_ARCH_RISCV64 0
++#endif
++
+ }  // namespace jxl
+ 
+ #endif  // LIB_JXL_BASE_ARCH_MACROS_H_

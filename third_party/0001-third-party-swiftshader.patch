@@ -1,0 +1,375 @@
+diff --git a/src/Reactor/SubzeroReactor.cpp b/src/Reactor/SubzeroReactor.cpp
+index dc38d8e8f..aa11ac3b7 100644
+--- a/src/Reactor/SubzeroReactor.cpp
++++ b/src/Reactor/SubzeroReactor.cpp
+@@ -664,6 +664,8 @@ std::vector<EntryPoint> loadImage(uint8_t *const elfImage, const std::vector<con
+ 	ASSERT(sizeof(void *) == 8 && elfHeader->e_machine == EM_AARCH64);
+ #elif defined(__mips__)
+ 	ASSERT(sizeof(void *) == 4 && elfHeader->e_machine == EM_MIPS);
++#elif defined(__riscv)
++	ASSERT(sizeof(void *) == 8 && elfHeader->e_machine == EM_RISCV64);
+ #else
+ #	error "Unsupported platform"
+ #endif
+diff --git a/third_party/llvm-10.0/BUILD.gn b/third_party/llvm-10.0/BUILD.gn
+index 94dbaa2c3..bd6f1f101 100644
+--- a/third_party/llvm-10.0/BUILD.gn
++++ b/third_party/llvm-10.0/BUILD.gn
+@@ -87,6 +87,7 @@ llvm_include_dirs = [
+   "llvm/lib/Target/ARM/",
+   "llvm/lib/Target/Mips/",
+   "llvm/lib/Target/PowerPC/",
++  "llvm/lib/Target/RISCV/",
+   "llvm/lib/Target/X86/",
+   "configs/common/include/",
+   "configs/common/lib/IR/",
+@@ -94,6 +95,7 @@ llvm_include_dirs = [
+   "configs/common/lib/Target/ARM/",
+   "configs/common/lib/Target/Mips/",
+   "configs/common/lib/Target/PowerPC/",
++  "configs/common/lib/Target/RISCV/",
+   "configs/common/lib/Target/X86/",
+   "configs/common/lib/Transforms/InstCombine/",
+ ]
+@@ -154,6 +156,8 @@ swiftshader_llvm_source_set("swiftshader_llvm") {
+     deps += [ ":swiftshader_llvm_ppc" ]
+   } else if (current_cpu == "x86" || current_cpu == "x64") {
+     deps += [ ":swiftshader_llvm_x86" ]
++  } else if (current_cpu == "riscv64") {
++    deps += [ ":swiftshader_llvm_riscv64" ]
+   } else {
+     assert(false, "Unsupported current_cpu")
+   }
+@@ -1314,3 +1318,39 @@ swiftshader_llvm_source_set("swiftshader_llvm_x86") {
+     "llvm/lib/Target/X86/X86WinEHState.cpp",
+   ]
+ }
++
++swiftshader_llvm_source_set("swiftshader_llvm_riscv64") {
++  sources = [
++    "llvm/lib/Target/RISCV/AsmParser/RISCVAsmParser.cpp",
++    "llvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVAsmBackend.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVELFObjectWriter.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVELFStreamer.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVInstPrinter.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVMCAsmInfo.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVMCCodeEmitter.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVMCExpr.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVMCTargetDesc.cpp",
++    "llvm/lib/Target/RISCV/MCTargetDesc/RISCVTargetStreamer.cpp",
++    "llvm/lib/Target/RISCV/RISCVAsmPrinter.cpp",
++    "llvm/lib/Target/RISCV/RISCVCallLowering.cpp",
++    "llvm/lib/Target/RISCV/RISCVExpandPseudoInsts.cpp",
++    "llvm/lib/Target/RISCV/RISCVFrameLowering.cpp",
++    "llvm/lib/Target/RISCV/RISCVInstrInfo.cpp",
++    "llvm/lib/Target/RISCV/RISCVInstructionSelector.cpp",
++    "llvm/lib/Target/RISCV/RISCVISelDAGToDAG.cpp",
++    "llvm/lib/Target/RISCV/RISCVISelLowering.cpp",
++    "llvm/lib/Target/RISCV/RISCVLegalizerInfo.cpp",
++    "llvm/lib/Target/RISCV/RISCVMCInstLower.cpp",
++    "llvm/lib/Target/RISCV/RISCVMergeBaseOffset.cpp",
++    "llvm/lib/Target/RISCV/RISCVRegisterBankInfo.cpp",
++    "llvm/lib/Target/RISCV/RISCVRegisterInfo.cpp",
++    "llvm/lib/Target/RISCV/RISCVSubtarget.cpp",
++    "llvm/lib/Target/RISCV/RISCVTargetMachine.cpp",
++    "llvm/lib/Target/RISCV/RISCVTargetObjectFile.cpp",
++    "llvm/lib/Target/RISCV/RISCVTargetTransformInfo.cpp",
++    "llvm/lib/Target/RISCV/TargetInfo/RISCVTargetInfo.cpp",
++    "llvm/lib/Target/RISCV/Utils/RISCVBaseInfo.cpp",
++    "llvm/lib/Target/RISCV/Utils/RISCVMatInt.cpp",
++  ]
++}
+diff --git a/third_party/llvm-10.0/CMakeLists.txt b/third_party/llvm-10.0/CMakeLists.txt
+index 4da792257..30e4d9026 100644
+--- a/third_party/llvm-10.0/CMakeLists.txt
++++ b/third_party/llvm-10.0/CMakeLists.txt
+@@ -1126,6 +1126,40 @@ elseif(ARCH STREQUAL "ppc64le")
+         ${LLVM_DIR}/lib/Target/PowerPC/PPCVSXSwapRemoval.cpp
+         ${LLVM_DIR}/lib/Target/PowerPC/TargetInfo/PowerPCTargetInfo.cpp
+     )
++elseif(ARCH STREQUAL "riscv64")
++    list(APPEND LLVM_LIST
++       ${LLVM_DIR}/lib/Target/RISCV/AsmParser/RISCVAsmParser.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVAsmBackend.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVELFObjectWriter.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVELFStreamer.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVInstPrinter.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVMCAsmInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVMCCodeEmitter.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVMCExpr.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVMCTargetDesc.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/MCTargetDesc/RISCVTargetStreamer.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVAsmPrinter.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVCallLowering.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVExpandPseudoInsts.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVFrameLowering.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVInstrInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVInstructionSelector.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVISelDAGToDAG.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVISelLowering.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVLegalizerInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVMCInstLower.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVMergeBaseOffset.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVRegisterBankInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVRegisterInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVSubtarget.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVTargetMachine.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVTargetObjectFile.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/RISCVTargetTransformInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/TargetInfo/RISCVTargetInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/Utils/RISCVBaseInfo.cpp
++       ${LLVM_DIR}/lib/Target/RISCV/Utils/RISCVMatInt.cpp
++    )
+ endif()
+ 
+ if(REACTOR_EMIT_DEBUG_INFO)
+@@ -1157,6 +1191,7 @@ list(APPEND LLVM_INCLUDE_DIR
+     ${LLVM_DIR}/lib/Target/ARM
+     ${LLVM_DIR}/lib/Target/Mips
+     ${LLVM_DIR}/lib/Target/PowerPC
++    ${LLVM_DIR}/lib/Target/RISCV
+     ${LLVM_DIR}/lib/Target/X86
+     ${LLVM_CONFIG_DIR}/common/include
+     ${LLVM_CONFIG_DIR}/common/lib/IR
+@@ -1164,6 +1199,7 @@ list(APPEND LLVM_INCLUDE_DIR
+     ${LLVM_CONFIG_DIR}/common/lib/Target/ARM
+     ${LLVM_CONFIG_DIR}/common/lib/Target/Mips
+     ${LLVM_CONFIG_DIR}/common/lib/Target/PowerPC
++    ${LLVM_CONFIG_DIR}/common/lib/Target/RISCV
+     ${LLVM_CONFIG_DIR}/common/lib/Target/X86
+     ${LLVM_CONFIG_DIR}/common/lib/Transforms/InstCombine
+ )
+diff --git a/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmParsers.def b/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmParsers.def
+index bce0713c9..9893c66f6 100644
+--- a/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmParsers.def
++++ b/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmParsers.def
+@@ -39,6 +39,9 @@ LLVM_ASM_PARSER(Mips)
+ #if defined(__powerpc64__)
+ LLVM_ASM_PARSER(PowerPC)
+ #endif
++#if defined(__riscv)
++LLVM_ASM_PARSER(RISCV)
++#endif
+ 
+ 
+ #undef LLVM_ASM_PARSER
+diff --git a/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmPrinters.def b/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmPrinters.def
+index 112b1a422..523ee3b60 100644
+--- a/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmPrinters.def
++++ b/third_party/llvm-10.0/configs/linux/include/llvm/Config/AsmPrinters.def
+@@ -39,6 +39,9 @@ LLVM_ASM_PRINTER(Mips)
+ #if defined(__powerpc64__)
+ LLVM_ASM_PRINTER(PowerPC)
+ #endif
++#if defined(__riscv)
++LLVM_ASM_PRINTER(RISCV)
++#endif
+ 
+ 
+ #undef LLVM_ASM_PRINTER
+diff --git a/third_party/llvm-10.0/configs/linux/include/llvm/Config/Disassemblers.def b/third_party/llvm-10.0/configs/linux/include/llvm/Config/Disassemblers.def
+index 850983c4a..4f61495b1 100644
+--- a/third_party/llvm-10.0/configs/linux/include/llvm/Config/Disassemblers.def
++++ b/third_party/llvm-10.0/configs/linux/include/llvm/Config/Disassemblers.def
+@@ -39,6 +39,9 @@ LLVM_DISASSEMBLER(Mips)
+ #if defined(__powerpc64__)
+ LLVM_DISASSEMBLER(PowerPC)
+ #endif
++#if defined(__riscv)
++LLVM_DISASSEMBLER(RISCV)
++#endif
+ 
+ 
+ #undef LLVM_DISASSEMBLER
+diff --git a/third_party/llvm-10.0/configs/linux/include/llvm/Config/Targets.def b/third_party/llvm-10.0/configs/linux/include/llvm/Config/Targets.def
+index 103d30ab0..0e68b413d 100644
+--- a/third_party/llvm-10.0/configs/linux/include/llvm/Config/Targets.def
++++ b/third_party/llvm-10.0/configs/linux/include/llvm/Config/Targets.def
+@@ -38,6 +38,9 @@ LLVM_TARGET(Mips)
+ #if defined(__powerpc64__)
+ LLVM_TARGET(PowerPC)
+ #endif
++#if defined(__riscv)
++LLVM_TARGET(RISCV)
++#endif
+ 
+ 
+ #undef LLVM_TARGET
+diff --git a/third_party/llvm-10.0/configs/linux/include/llvm/Config/abi-breaking.h b/third_party/llvm-10.0/configs/linux/include/llvm/Config/abi-breaking.h
+index de8038352..fd32bf381 100644
+--- a/third_party/llvm-10.0/configs/linux/include/llvm/Config/abi-breaking.h
++++ b/third_party/llvm-10.0/configs/linux/include/llvm/Config/abi-breaking.h
+@@ -13,11 +13,7 @@
+ #define LLVM_ABI_BREAKING_CHECKS_H
+ 
+ /* Define to enable checks that alter the LLVM C++ ABI */
+-#if defined(NDEBUG)
+ #define LLVM_ENABLE_ABI_BREAKING_CHECKS 0
+-#else
+-#define LLVM_ENABLE_ABI_BREAKING_CHECKS 1
+-#endif
+ 
+ /* Define to enable reverse iteration of unordered llvm containers */
+ #define LLVM_ENABLE_REVERSE_ITERATION 0
+diff --git a/third_party/llvm-10.0/configs/linux/include/llvm/Config/config.h b/third_party/llvm-10.0/configs/linux/include/llvm/Config/config.h
+index 24bdc67bb..efbb1f4c1 100644
+--- a/third_party/llvm-10.0/configs/linux/include/llvm/Config/config.h
++++ b/third_party/llvm-10.0/configs/linux/include/llvm/Config/config.h
+@@ -4,9 +4,6 @@
+ /* Exported configuration */
+ #include "llvm/Config/llvm-config.h"
+ 
+-/* For detecting __GLIBC__ usage */
+-#include <features.h>
+-
+ /* Bug report URL. */
+ #define BUG_REPORT_URL "https://bugs.llvm.org/"
+ 
+@@ -130,12 +127,6 @@
+ /* Define to 1 if you have the `mallinfo' function. */
+ #define HAVE_MALLINFO 1
+ 
+-/* Some projects using SwiftShader bypass cmake (eg Chromium via gn) */
+-/* so we need to check glibc version for the new API to be safe */
+-#if defined(__GLIBC__) && __GLIBC_MINOR__ >= 33
+-#define HAVE_MALLINFO2 1
+-#endif
+-
+ /* Define to 1 if you have the <malloc/malloc.h> header file. */
+ /* #undef HAVE_MALLOC_MALLOC_H */
+ 
+@@ -317,6 +308,8 @@
+ #define LLVM_DEFAULT_TARGET_TRIPLE "mips64el-linux-gnuabi64"
+ #elif defined(__powerpc64__)
+ #define LLVM_DEFAULT_TARGET_TRIPLE "powerpc64le-unknown-linux-gnu"
++#elif defined(__riscv)
++#define LLVM_DEFAULT_TARGET_TRIPLE "riscv64-unknown-linux-gnu"
+ #else
+ #error "unknown architecture"
+ #endif
+diff --git a/third_party/llvm-10.0/configs/linux/include/llvm/Config/llvm-config.h b/third_party/llvm-10.0/configs/linux/include/llvm/Config/llvm-config.h
+index 6b267512b..44494f9aa 100644
+--- a/third_party/llvm-10.0/configs/linux/include/llvm/Config/llvm-config.h
++++ b/third_party/llvm-10.0/configs/linux/include/llvm/Config/llvm-config.h
+@@ -42,6 +42,8 @@
+ #define LLVM_DEFAULT_TARGET_TRIPLE "mips64el-linux-gnuabi64"
+ #elif defined(__powerpc64__)
+ #define LLVM_DEFAULT_TARGET_TRIPLE "powerpc64le-unknown-linux-gnu"
++#elif defined(__riscv)
++#define LLVM_DEFAULT_TARGET_TRIPLE "riscv64-unknown-linux-gnu"
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -67,6 +69,8 @@
+ #define LLVM_HOST_TRIPLE "mips64el-linux-gnuabi64"
+ #elif defined(__powerpc64__)
+ #define LLVM_HOST_TRIPLE "powerpc64le-unknown-linux-gnu"
++#elif defined(__riscv)
++#define LLVM_HOST_TRIPLE "riscv64-unknown-linux-gnu"
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -82,6 +86,8 @@
+ #define LLVM_NATIVE_ARCH Mips
+ #elif defined(__powerpc64__)
+ #define LLVM_NATIVE_ARCH PowerPC
++#elif defined(__riscv)
++#define LLVM_NATIVE_ARCH RISCV
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -97,6 +103,8 @@
+ #define LLVM_NATIVE_ASMPARSER LLVMInitializeMipsAsmParser
+ #elif defined(__powerpc64__)
+ #define LLVM_NATIVE_ASMPARSER LLVMInitializePowerPCAsmParser
++#elif defined(__riscv)
++#define LLVM_NATIVE_ASMPARSER LLVMInitializeRISCVAsmParser
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -112,6 +120,8 @@
+ #define LLVM_NATIVE_ASMPRINTER LLVMInitializeMipsAsmPrinter
+ #elif defined(__powerpc64__)
+ #define LLVM_NATIVE_ASMPRINTER LLVMInitializePowerPCAsmPrinter
++#elif defined(__riscv)
++#define LLVM_NATIVE_ASMPRINTER LLVMInitializeRISCVAsmPrinter
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -127,6 +137,8 @@
+ #define LLVM_NATIVE_DISASSEMBLER LLVMInitializeMipsDisassembler
+ #elif defined(__powerpc64__)
+ #define LLVM_NATIVE_DISASSEMBLER LLVMInitializePowerPCDisassembler
++#elif defined(__riscv)
++#define LLVM_NATIVE_DISASSEMBLER LLVMInitializeRISCVDisassembler
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -142,6 +154,8 @@
+ #define LLVM_NATIVE_TARGET LLVMInitializeMipsTarget
+ #elif defined(__powerpc64__)
+ #define LLVM_NATIVE_TARGET LLVMInitializePowerPCTarget
++#elif defined(__riscv)
++#define LLVM_NATIVE_TARGET LLVMInitializeRISCVTarget
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -157,6 +171,8 @@
+ #define LLVM_NATIVE_TARGETINFO LLVMInitializeMipsTargetInfo
+ #elif defined(__powerpc64__)
+ #define LLVM_NATIVE_TARGETINFO LLVMInitializePowerPCTargetInfo
++#elif defined(__riscv)
++#define LLVM_NATIVE_TARGETINFO LLVMInitializeRISCVTargetInfo
+ #else
+ #error "unknown architecture"
+ #endif
+@@ -172,6 +188,8 @@
+ #define LLVM_NATIVE_TARGETMC LLVMInitializeMipsTargetMC
+ #elif defined(__powerpc64__)
+ #define LLVM_NATIVE_TARGETMC LLVMInitializePowerPCTargetMC
++#elif defined(__riscv)
++#define LLVM_NATIVE_TARGETMC LLVMInitializeRISCVTargetMC
+ #else
+ #error "unknown architecture"
+ #endif
+diff --git a/third_party/llvm-10.0/scripts/update.py b/third_party/llvm-10.0/scripts/update.py
+old mode 100644
+new mode 100755
+index d25eecf03..64a9f4886
+--- a/third_party/llvm-10.0/scripts/update.py
++++ b/third_party/llvm-10.0/scripts/update.py
+@@ -46,6 +46,7 @@ LLVM_TARGETS = [
+     ('X86', ('__i386__', '__x86_64__')),
+     ('Mips', ('__mips__',)),
+     ('PowerPC', ('__powerpc64__',)),
++    ('RISCV', ('__riscv')),
+ ]
+ 
+ # Per-platform arches
+@@ -64,6 +65,7 @@ LLVM_TRIPLES = {
+         ('__mips__', 'mipsel-linux-gnu'),
+         ('__mips64', 'mips64el-linux-gnuabi64'),
+         ('__powerpc64__', 'powerpc64le-unknown-linux-gnu'),
++        ('__riscv', 'riscv64-unknown-linux-gnu'),
+     ],
+     'darwin': [
+         ('__x86_64__', 'x86_64-apple-darwin'),
+diff --git a/third_party/marl/BUILD.gn b/third_party/marl/BUILD.gn
+index e1e29b1d5..fb0e8f764 100644
+--- a/third_party/marl/BUILD.gn
++++ b/third_party/marl/BUILD.gn
+@@ -92,6 +92,12 @@ swiftshader_source_set("Marl") {
+         "src/osfiber_asm_x86.h",
+         "src/osfiber_asm_x86.S",
+       ]
++    } else if (current_cpu == "riscv64") {
++      sources += [
++        "src/osfiber_rv64.c",
++        "src/osfiber_asm_rv64.h",
++        "src/osfiber_asm_rv64.S",
++      ]
+     } else {
+       assert(false, "Unhandled value for current-cpu=" + current_cpu)
+     }

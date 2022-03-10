@@ -1,0 +1,99 @@
+From fd01f7dd48b2dabbbd0751c02d8b07bea92ebeb9 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 14 Jan 2022 07:16:30 +0000
+Subject: [PATCH 14/23] media: gpu: disable tests
+
+Unable to assert "enable_av1_decoder".
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ media/gpu/BUILD.gn | 73 ----------------------------------------------
+ 1 file changed, 73 deletions(-)
+
+diff --git a/media/gpu/BUILD.gn b/media/gpu/BUILD.gn
+index 78d151fa630d2..383826e2cbbaa 100644
+--- a/media/gpu/BUILD.gn
++++ b/media/gpu/BUILD.gn
+@@ -557,79 +557,6 @@ source_set("unit_tests") {
+   }
+ }
+ 
+-# TODO(crbug.com/1006266): consider using |use_chromeos_video_acceleration|.
+-if (use_v4l2_codec || use_vaapi) {
+-  test("video_decode_accelerator_tests") {
+-    assert(enable_av1_decoder)
+-    testonly = true
+-    sources = [ "video_decode_accelerator_tests.cc" ]
+-    data = [ "//media/test/data/" ]
+-    deps = [
+-      ":buildflags",
+-      "test:frame_file_writer",
+-      "test:frame_validator",
+-      "test:helpers",
+-      "test:test_helpers",
+-      "test:video_player",
+-      "test:video_player_test_environment",
+-      "test:video_player_thumbnail_renderer",
+-      "//media:test_support",
+-      "//testing/gtest",
+-    ]
+-  }
+-
+-  test("video_decode_accelerator_perf_tests") {
+-    testonly = true
+-    sources = [ "video_decode_accelerator_perf_tests.cc" ]
+-    data = [ "//media/test/data/" ]
+-    deps = [
+-      ":buildflags",
+-      "test:helpers",
+-      "test:video_player",
+-      "test:video_player_test_environment",
+-      "//media:test_support",
+-      "//sandbox/linux:sandbox_services",
+-      "//testing/gtest",
+-    ]
+-  }
+-
+-  test("video_encode_accelerator_tests") {
+-    testonly = true
+-    sources = [ "video_encode_accelerator_tests.cc" ]
+-    data = [ "//media/test/data/" ]
+-    deps = [
+-      ":buildflags",
+-      ":common",
+-      "test:frame_file_writer",
+-      "test:frame_validator",
+-      "test:helpers",
+-      "test:test_helpers",
+-      "test:video_encoder",
+-      "test:video_encoder_test_environment",
+-      "//media:test_support",
+-      "//testing/gtest",
+-    ]
+-  }
+-
+-  test("video_encode_accelerator_perf_tests") {
+-    testonly = true
+-    sources = [ "video_encode_accelerator_perf_tests.cc" ]
+-    data = [ "//media/test/data/" ]
+-    deps = [
+-      ":buildflags",
+-      ":common",
+-      "test:frame_validator",
+-      "test:helpers",
+-      "test:test_helpers",
+-      "test:video_encoder",
+-      "test:video_encoder_test_environment",
+-      "test:video_encoder_test_environment",
+-      "//media:test_support",
+-      "//testing/gtest",
+-    ]
+-  }
+-}
+-
+ if (enable_platform_hevc_decoding) {
+   fuzzer_test("media_h265_decoder_fuzzer") {
+     sources = [ "h265_decoder_fuzzertest.cc" ]
+-- 
+2.25.1
+
