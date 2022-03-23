@@ -1,7 +1,7 @@
-From 5af6df583558e7f7eb671f6a8caee64324cf6067 Mon Sep 17 00:00:00 2001
+From 7cb03c28659afc015141337440098ac0afec449a Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 19 Jan 2022 05:48:04 +0000
-Subject: [PATCH 22/23] build: gn_run_binary.py: do not run binary from ./
+Subject: [PATCH 21/21] build: gn_run_binary.py: do not run binary from ./
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

@@ -73,7 +73,7 @@ solutions = [
 4. Checkout to specific commits where the patchset are based on.
 ```
 $ cd ~/chromium/src
-$ git checkout ea07d52ad103a
+$ git checkout d02d5bc22b059
 
 ```
 

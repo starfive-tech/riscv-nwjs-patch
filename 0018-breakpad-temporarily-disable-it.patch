@@ -1,7 +1,7 @@
-From 99ead2f37c09f44e70ba38f4a966cf30734c410e Mon Sep 17 00:00:00 2001
+From cfaab11bccc1c8e55b42cc91d7429b4ee5e74c89 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Tue, 15 Feb 2022 06:06:40 +0000
-Subject: [PATCH 19/23] breakpad: temporarily disable it
+Subject: [PATCH 18/21] breakpad: temporarily disable it
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
@@ -21,10 +21,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  delete mode 100644 third_party/breakpad/BUILD.gn
 
 diff --git a/BUILD.gn b/BUILD.gn
-index b89899174c694..16f5f07ffe72f 100644
+index 31ac925dbe1b6..f88524c8c1435 100644
 --- a/BUILD.gn
 +++ b/BUILD.gn
-@@ -433,10 +433,6 @@ group("gn_all") {
+@@ -434,10 +434,6 @@ group("gn_all") {
  
    if (is_linux || is_chromeos || is_android) {
      deps += [
@@ -35,7 +35,7 @@ index b89899174c694..16f5f07ffe72f 100644
        "//tools/dump_process_memory:dump_process",
        "//tools/memory/partition_allocator:all",
      ]
-@@ -593,10 +589,6 @@ group("gn_all") {
+@@ -594,10 +590,6 @@ group("gn_all") {
        "//mojo:mojo_perftests",
        "//services/service_manager/public/cpp",
        "//testing/gmock:gmock_main",
@@ -46,7 +46,7 @@ index b89899174c694..16f5f07ffe72f 100644
      ]
  
      if (!is_android) {
-@@ -622,9 +614,6 @@ group("gn_all") {
+@@ -623,9 +615,6 @@ group("gn_all") {
  
    if (is_mac) {
      deps += [
@@ -56,7 +56,7 @@ index b89899174c694..16f5f07ffe72f 100644
        # The following are accessibility API tools.
        "//tools/accessibility/inspect:ax_dump_events",
        "//tools/accessibility/inspect:ax_dump_tree",
-@@ -669,8 +658,6 @@ group("gn_all") {
+@@ -670,8 +659,6 @@ group("gn_all") {
          host_os == "win") {
        deps += [ "//chrome/test/mini_installer:mini_installer_tests" ]
      }
@@ -65,7 +65,7 @@ index b89899174c694..16f5f07ffe72f 100644
    }
  
    if (is_chromecast) {
-@@ -950,7 +937,6 @@ if (is_win) {
+@@ -951,7 +938,6 @@ if (is_win) {
        "//net:net_unittests",
        "//printing:printing_unittests",
        "//sql:sql_unittests",
@@ -73,7 +73,7 @@ index b89899174c694..16f5f07ffe72f 100644
        "//ui/base:ui_base_unittests",
        "//ui/gfx:gfx_unittests",
        "//ui/touch_selection:ui_touch_selection_unittests",
-@@ -977,7 +963,6 @@ if (is_chromeos_ash) {
+@@ -978,7 +964,6 @@ if (is_chromeos_ash) {
        "//ppapi/examples/video_decode",
        "//sandbox/linux:chrome_sandbox",
        "//sandbox/linux:sandbox_linux_unittests",
@@ -81,7 +81,7 @@ index b89899174c694..16f5f07ffe72f 100644
        "//third_party/dawn/src/dawn/tests:dawn_end2end_tests",
        "//third_party/dawn/src/dawn/tests:dawn_unittests",
  
-@@ -1122,31 +1107,12 @@ if (!is_ios) {
+@@ -1123,31 +1108,12 @@ if (!is_ios) {
  
      if (is_android) {
        data_deps += [
@@ -113,7 +113,7 @@ index b89899174c694..16f5f07ffe72f 100644
      if (is_fuchsia) {
        data_deps += [
          "//build/config/fuchsia:deployment_resources",
-@@ -1522,10 +1488,8 @@ group("chromium_builder_perf") {
+@@ -1526,10 +1492,8 @@ group("chromium_builder_perf") {
  
      if (is_win) {
        data_deps += [ "//chrome/installer/mini_installer:mini_installer" ]
@@ -126,7 +126,7 @@ index b89899174c694..16f5f07ffe72f 100644
        data_deps += [
          "//components:components_perftests",
 diff --git a/chrome/BUILD.gn b/chrome/BUILD.gn
-index 8ea492bffcaaf..a56a135967f87 100644
+index 6a696e816a185..63471a722295c 100644
 --- a/chrome/BUILD.gn
 +++ b/chrome/BUILD.gn
 @@ -202,8 +202,6 @@ if (!is_android && !is_mac) {
@@ -146,7 +146,7 @@ index 8ea492bffcaaf..a56a135967f87 100644
        "--scm=1",
        "--bundle_id=$chrome_mac_bundle_id",
      ]
-@@ -712,7 +709,6 @@ if (is_win) {
+@@ -668,7 +665,6 @@ if (is_win) {
    tweak_info_plist("chrome_helper_plist") {
      info_plist = "app/helper-Info.plist"
      args = [
@@ -154,7 +154,7 @@ index 8ea492bffcaaf..a56a135967f87 100644
        "--keystone=0",
        "--scm=0",
      ]
-@@ -1126,7 +1122,6 @@ if (is_win) {
+@@ -1076,7 +1072,6 @@ if (is_win) {
    tweak_info_plist("chrome_framework_plist") {
      info_plist = "app/framework-Info.plist"
      args = [
@@ -162,8 +162,8 @@ index 8ea492bffcaaf..a56a135967f87 100644
        "--keystone=0",
        "--scm=1",
        "--branding",
-@@ -1366,7 +1361,6 @@ if (is_win) {
-         "//content/public/app:aperitif",
+@@ -1307,7 +1302,6 @@ if (is_win) {
+         "//components/crash/core/app:chrome_crashpad_handler",
          "//third_party/angle:libEGL",
          "//third_party/angle:libGLESv2",
 -        "//third_party/breakpad:dump_syms",
@@ -171,7 +171,7 @@ index 8ea492bffcaaf..a56a135967f87 100644
          "//third_party/swiftshader/src/OpenGL/libGLESv2:swiftshader_libGLESv2",
          "//third_party/swiftshader/src/Vulkan:swiftshader_libvulkan",
 diff --git a/chrome/test/BUILD.gn b/chrome/test/BUILD.gn
-index f92e7fe9b1130..57179adcbd49e 100644
+index 76f3c753e508a..d93a17bb977c1 100644
 --- a/chrome/test/BUILD.gn
 +++ b/chrome/test/BUILD.gn
 @@ -399,7 +399,6 @@ static_library("test_support") {
@@ -182,7 +182,7 @@ index f92e7fe9b1130..57179adcbd49e 100644
      ]
    }
  
-@@ -9221,9 +9220,6 @@ test("chrome_app_unittests") {
+@@ -9296,9 +9295,6 @@ test("chrome_app_unittests") {
      "//components/heap_profiling/in_process",
      "//components/safe_browsing:buildflags",
    ]
@@ -309,10 +309,10 @@ index 31a7822c7ee9a..7de416b4ec498 100644
    }
  
 diff --git a/content/shell/BUILD.gn b/content/shell/BUILD.gn
-index c65a820cdacdf..746aa637708d3 100644
+index ae7cae154474d..7d89f3d82b4a0 100644
 --- a/content/shell/BUILD.gn
 +++ b/content/shell/BUILD.gn
-@@ -661,7 +661,6 @@ if (is_mac) {
+@@ -651,7 +651,6 @@ if (is_mac) {
      testonly = true
      info_plist = "app/framework-Info.plist"
      args = [
@@ -320,7 +320,7 @@ index c65a820cdacdf..746aa637708d3 100644
        "--keystone=0",
        "--scm=1",
        "--version",
-@@ -739,7 +738,6 @@ if (is_mac) {
+@@ -725,7 +724,6 @@ if (is_mac) {
      testonly = true
      info_plist = "app/helper-Info.plist"
      args = [
@@ -328,7 +328,7 @@ index c65a820cdacdf..746aa637708d3 100644
        "--keystone=0",
        "--scm=0",
        "--version",
-@@ -910,19 +908,10 @@ group("content_shell_crash_test") {
+@@ -884,19 +882,10 @@ group("content_shell_crash_test") {
    if (is_win) {
      data_deps += [ "//build/win:copy_cdb_to_output" ]
    }

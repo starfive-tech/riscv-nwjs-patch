@@ -1,7 +1,7 @@
-From fd01f7dd48b2dabbbd0751c02d8b07bea92ebeb9 Mon Sep 17 00:00:00 2001
+From 256e69acbdadc608f198cc727d96dc5f607e58da Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 07:16:30 +0000
-Subject: [PATCH 14/23] media: gpu: disable tests
+Subject: [PATCH 13/21] media: gpu: disable tests
 
 Unable to assert "enable_av1_decoder".
 
@@ -11,10 +11,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  1 file changed, 73 deletions(-)
 
 diff --git a/media/gpu/BUILD.gn b/media/gpu/BUILD.gn
-index 78d151fa630d2..383826e2cbbaa 100644
+index 9244da3cf636b..ae2461f645ef9 100644
 --- a/media/gpu/BUILD.gn
 +++ b/media/gpu/BUILD.gn
-@@ -557,79 +557,6 @@ source_set("unit_tests") {
+@@ -589,79 +589,6 @@ source_set("unit_tests") {
    }
  }
  

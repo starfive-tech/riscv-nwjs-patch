@@ -1,5 +1,5 @@
 diff --git a/BUILD.gn b/BUILD.gn
-index 5ea4e37336..e9f7934b3c 100755
+index 5ea4e37336..cd4b61bb2d 100755
 --- a/BUILD.gn
 +++ b/BUILD.gn
 @@ -7,6 +7,7 @@ import("ffmpeg_options.gni")
@@ -10,6 +10,14 @@ index 5ea4e37336..e9f7934b3c 100755
  import("//build/config/sanitizers/sanitizers.gni")
  
  # Path to platform configuration files.
+@@ -435,6 +436,7 @@ if (is_component_ffmpeg) {
+       # Fixes warnings PIC relocation when building as component.
+       ldflags += [
+         "-Wl,-Bsymbolic",
++        "-Wl,-L../../build/linux/debian_sid_riscv64-sysroot/usr/lib/riscv64-linux-gnu",
+         "-L",
+         rebase_path(target_gen_dir, root_build_dir),
+       ]
 diff --git a/CREDITS.chromium b/CREDITS.chromium
 index 1a12e2a528..8cbb66d9d1 100644
 --- a/CREDITS.chromium

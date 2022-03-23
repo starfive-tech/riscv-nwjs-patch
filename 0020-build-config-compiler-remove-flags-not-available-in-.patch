@@ -1,7 +1,7 @@
-From 937aab2451d9f8997c57df701a9e497b20282cb3 Mon Sep 17 00:00:00 2001
+From 0bd78278a33511057888656d3221f552fc09c70a Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Mon, 17 Jan 2022 08:15:52 +0000
-Subject: [PATCH 21/23] build: config: compiler: remove flags not available in
+Subject: [PATCH 20/21] build: config: compiler: remove flags not available in
  custom clang
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
@@ -10,10 +10,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
-index 48435f6bb5dd7..9aa96a006cfde 100644
+index 9af6b9b08eb02..e227fdb641504 100644
 --- a/build/config/compiler/BUILD.gn
 +++ b/build/config/compiler/BUILD.gn
-@@ -350,7 +350,6 @@ config("compiler") {
+@@ -349,7 +349,6 @@ config("compiler") {
      }
  
      if (use_lld) {
@@ -21,7 +21,7 @@ index 48435f6bb5dd7..9aa96a006cfde 100644
        if (lld_path != "") {
          ldflags += [ "-B$lld_path" ]
        }
-@@ -490,10 +489,6 @@ config("compiler") {
+@@ -482,10 +481,6 @@ config("compiler") {
      #}
    }
  
@@ -32,7 +32,7 @@ index 48435f6bb5dd7..9aa96a006cfde 100644
    if (is_linux || is_chromeos) {
      cflags += [ "-pthread" ]
      # Do not use the -pthread ldflag here since it becomes a no-op
-@@ -504,8 +499,6 @@ config("compiler") {
+@@ -496,8 +491,6 @@ config("compiler") {
    # Clang-specific compiler flags setup.
    # ------------------------------------
    if (is_clang) {
@@ -41,7 +41,7 @@ index 48435f6bb5dd7..9aa96a006cfde 100644
      # Enable -fmerge-all-constants. This used to be the default in clang
      # for over a decade. It makes clang non-conforming, but is fairly safe
      # in practice and saves some binary size. We might want to consider
-@@ -523,8 +516,6 @@ config("compiler") {
+@@ -515,8 +508,6 @@ config("compiler") {
        # On Windows, we call the linker directly, instead of calling it through
        # the driver.
        ldflags += [ "--color-diagnostics" ]
@@ -50,7 +50,7 @@ index 48435f6bb5dd7..9aa96a006cfde 100644
      }
    }
  
-@@ -762,10 +753,6 @@ config("compiler") {
+@@ -754,10 +745,6 @@ config("compiler") {
    if (use_lld && !enable_call_graph_profile_sort) {
      if (is_win) {
        ldflags += [ "/call-graph-profile-sort:no" ]

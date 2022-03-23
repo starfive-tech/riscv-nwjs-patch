@@ -1,7 +1,7 @@
-From 34a809c7917b82834ad2d70ad49cba590fbc85a1 Mon Sep 17 00:00:00 2001
+From d593966fb993cc332c94ba73cfcbc98bf62eb22c Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Mon, 17 Jan 2022 04:48:24 +0000
-Subject: [PATCH 18/23] build: config: compiler: use_gold linker option
+Subject: [PATCH 17/21] build: config: compiler: use_gold linker option
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

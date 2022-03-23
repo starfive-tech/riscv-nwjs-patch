@@ -1,7 +1,7 @@
-From a4085a2e27b9155bdff09891964aa33b995bd53c Mon Sep 17 00:00:00 2001
+From 0ea7a288297465ce376db2aee1498fbea0e2545c Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 01:04:19 +0000
-Subject: [PATCH 08/23] skia: add riscv64
+Subject: [PATCH 07/21] skia: add riscv64
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

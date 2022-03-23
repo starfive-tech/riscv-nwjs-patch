@@ -1,18 +1,5 @@
-diff --git a/src/Reactor/SubzeroReactor.cpp b/src/Reactor/SubzeroReactor.cpp
-index dc38d8e8f..aa11ac3b7 100644
---- a/src/Reactor/SubzeroReactor.cpp
-+++ b/src/Reactor/SubzeroReactor.cpp
-@@ -664,6 +664,8 @@ std::vector<EntryPoint> loadImage(uint8_t *const elfImage, const std::vector<con
- 	ASSERT(sizeof(void *) == 8 && elfHeader->e_machine == EM_AARCH64);
- #elif defined(__mips__)
- 	ASSERT(sizeof(void *) == 4 && elfHeader->e_machine == EM_MIPS);
-+#elif defined(__riscv)
-+	ASSERT(sizeof(void *) == 8 && elfHeader->e_machine == EM_RISCV64);
- #else
- #	error "Unsupported platform"
- #endif
 diff --git a/third_party/llvm-10.0/BUILD.gn b/third_party/llvm-10.0/BUILD.gn
-index 94dbaa2c3..bd6f1f101 100644
+index 94dbaa2c3..6c40b2c00 100644
 --- a/third_party/llvm-10.0/BUILD.gn
 +++ b/third_party/llvm-10.0/BUILD.gn
 @@ -87,6 +87,7 @@ llvm_include_dirs = [
@@ -31,15 +18,15 @@ index 94dbaa2c3..bd6f1f101 100644
    "configs/common/lib/Target/X86/",
    "configs/common/lib/Transforms/InstCombine/",
  ]
-@@ -154,6 +156,8 @@ swiftshader_llvm_source_set("swiftshader_llvm") {
+@@ -152,6 +154,8 @@ swiftshader_llvm_source_set("swiftshader_llvm") {
+     deps += [ ":swiftshader_llvm_mips" ]
+   } else if (current_cpu == "ppc64") {
      deps += [ ":swiftshader_llvm_ppc" ]
-   } else if (current_cpu == "x86" || current_cpu == "x64") {
-     deps += [ ":swiftshader_llvm_x86" ]
 +  } else if (current_cpu == "riscv64") {
 +    deps += [ ":swiftshader_llvm_riscv64" ]
+   } else if (current_cpu == "x86" || current_cpu == "x64") {
+     deps += [ ":swiftshader_llvm_x86" ]
    } else {
-     assert(false, "Unsupported current_cpu")
-   }
 @@ -1314,3 +1318,39 @@ swiftshader_llvm_source_set("swiftshader_llvm_x86") {
      "llvm/lib/Target/X86/X86WinEHState.cpp",
    ]
@@ -335,9 +322,7 @@ index 6b267512b..44494f9aa 100644
  #error "unknown architecture"
  #endif
 diff --git a/third_party/llvm-10.0/scripts/update.py b/third_party/llvm-10.0/scripts/update.py
-old mode 100644
-new mode 100755
-index d25eecf03..64a9f4886
+index d25eecf03..64a9f4886 100644
 --- a/third_party/llvm-10.0/scripts/update.py
 +++ b/third_party/llvm-10.0/scripts/update.py
 @@ -46,6 +46,7 @@ LLVM_TARGETS = [
@@ -357,12 +342,12 @@ index d25eecf03..64a9f4886
      'darwin': [
          ('__x86_64__', 'x86_64-apple-darwin'),
 diff --git a/third_party/marl/BUILD.gn b/third_party/marl/BUILD.gn
-index e1e29b1d5..fb0e8f764 100644
+index e1e29b1d5..0de8e83c9 100644
 --- a/third_party/marl/BUILD.gn
 +++ b/third_party/marl/BUILD.gn
-@@ -92,6 +92,12 @@ swiftshader_source_set("Marl") {
-         "src/osfiber_asm_x86.h",
-         "src/osfiber_asm_x86.S",
+@@ -80,6 +80,12 @@ swiftshader_source_set("Marl") {
+         "src/osfiber_asm_ppc64.h",
+         "src/osfiber_asm_ppc64.S",
        ]
 +    } else if (current_cpu == "riscv64") {
 +      sources += [
@@ -370,6 +355,6 @@ index e1e29b1d5..fb0e8f764 100644
 +        "src/osfiber_asm_rv64.h",
 +        "src/osfiber_asm_rv64.S",
 +      ]
-     } else {
-       assert(false, "Unhandled value for current-cpu=" + current_cpu)
-     }
+     } else if (current_cpu == "x64") {
+       sources += [
+         "src/osfiber_x64.c",

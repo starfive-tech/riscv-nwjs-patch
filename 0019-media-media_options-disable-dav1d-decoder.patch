@@ -1,7 +1,7 @@
-From 1b9a2c39a04e3c1066ec9bf0e2a66abec0f95ea6 Mon Sep 17 00:00:00 2001
+From 709f9e81fc71ae3d3f1b4850db91a38b1a9a3a87 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 09:07:44 +0000
-Subject: [PATCH 20/23] media: media_options: disable dav1d decoder
+Subject: [PATCH 19/21] media: media_options: disable dav1d decoder
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
@@ -22,10 +22,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  delete mode 100644 third_party/dav1d/BUILD.gn
 
 diff --git a/media/BUILD.gn b/media/BUILD.gn
-index 6f9683b4a2672..0cd92a3dae681 100644
+index e1683ef9e76ef..7d34fe24bd32f 100644
 --- a/media/BUILD.gn
 +++ b/media/BUILD.gn
-@@ -25,7 +25,6 @@ buildflag_header("media_buildflags") {
+@@ -26,7 +26,6 @@ buildflag_header("media_buildflags") {
      "ENABLE_CAST_AUDIO_RENDERER=$enable_cast_audio_renderer",
      "ENABLE_CDM_HOST_VERIFICATION=$enable_cdm_host_verification",
      "ENABLE_CDM_STORAGE_ID=$enable_cdm_storage_id",
@@ -141,7 +141,7 @@ index bce49fb05f659..1d122ce1c0624 100644
  #endif
  
 diff --git a/media/media_options.gni b/media/media_options.gni
-index 4a230499ffa7d..36f39fc523725 100644
+index 1b2af27c5079d..55316f6f124d8 100644
 --- a/media/media_options.gni
 +++ b/media/media_options.gni
 @@ -74,7 +74,7 @@ declare_args() {

@@ -1,7 +1,7 @@
-From 7acf37d0878ec1ce7d32e4ef24047caa3727e024 Mon Sep 17 00:00:00 2001
+From 8598515eb3ab065207a46ad4ec279328838554d7 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 02:40:23 +0000
-Subject: [PATCH 10/23] BUILD.gn: disable printing unittests
+Subject: [PATCH 09/21] BUILD.gn: disable printing unittests
 
 Depends on cups-config in sysroot.
 Currently sysroot does not include cups-config.
@@ -12,10 +12,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  1 file changed, 4 deletions(-)
 
 diff --git a/BUILD.gn b/BUILD.gn
-index 45b4b53b274b8..627111a2ffae1 100644
+index 8045dc8809750..21d17e9c88fc3 100644
 --- a/BUILD.gn
 +++ b/BUILD.gn
-@@ -267,10 +267,6 @@ group("gn_all") {
+@@ -268,10 +268,6 @@ group("gn_all") {
  
    deps += root_extra_deps
  
