@@ -177,4 +177,5 @@ Note: Running with --screenshot will produce a file named screenshot.png in the 
 
 1. PPC Porting Guide: https://wiki.raptorcs.com/wiki/Porting/Chromium
 2. SUSE Chromium Port: https://build.opensuse.org/package/show/network:chromium/chromium?expand=1
-3. Fedora rawhide Chromium Port: https://src.fedoraproject.org/rpms/chromium/tree/rawhide 
+3. Fedora rawhide Chromium Port: https://src.fedoraproject.org/rpms/chromium/tree/rawhide
+4. Github User: https://github.com/felixonmars/archriscv-packages/tree/master/chromium
