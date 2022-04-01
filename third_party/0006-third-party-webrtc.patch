@@ -23,6 +23,19 @@ index da328b48b0..719da297a9 100644
  #include "absl/types/optional.h"
  #include "rtc_base/bitstream_reader.h"
  
+diff --git a/modules/desktop_capture/differ_block.cc b/modules/desktop_capture/differ_block.cc
+index 4f0c5430c9..a89fcc9753 100644
+--- a/modules/desktop_capture/differ_block.cc
++++ b/modules/desktop_capture/differ_block.cc
+@@ -30,7 +30,7 @@ bool VectorDifference(const uint8_t* image1, const uint8_t* image2) {
+   static bool (*diff_proc)(const uint8_t*, const uint8_t*) = nullptr;
+ 
+   if (!diff_proc) {
+-#if defined(WEBRTC_ARCH_ARM_FAMILY) || defined(WEBRTC_ARCH_MIPS_FAMILY)
++#if defined(WEBRTC_ARCH_ARM_FAMILY) || defined(WEBRTC_ARCH_MIPS_FAMILY) || defined(WEBRTC_ARCH_RISCV_FAMILY)
+     // For ARM and MIPS processors, always use C version.
+     // TODO(hclam): Implement a NEON version.
+     diff_proc = &VectorDifference_C;
 diff --git a/modules/include/module_common_types_public.h b/modules/include/module_common_types_public.h
 index 345e45ce12..8338a51462 100644
 --- a/modules/include/module_common_types_public.h
@@ -59,3 +72,19 @@ index 85d1fa00d7..262b141b93 100644
  #include <string>
  #include <vector>
  
+diff --git a/rtc_base/system/arch.h b/rtc_base/system/arch.h
+index be2367b85f..dfff855bae 100644
+--- a/rtc_base/system/arch.h
++++ b/rtc_base/system/arch.h
+@@ -68,9 +68,11 @@
+ #endif
+ #define WEBRTC_ARCH_BIG_ENDIAN
+ #elif defined(__riscv) && __riscv_xlen == 64
++#define WEBRTC_ARCH_RISCV_FAMILY
+ #define WEBRTC_ARCH_64_BITS
+ #define WEBRTC_ARCH_LITTLE_ENDIAN
+ #elif defined(__riscv) && __riscv_xlen == 32
++#define WEBRTC_ARCH_RISCV_FAMILY
+ #define WEBRTC_ARCH_32_BITS
+ #define WEBRTC_ARCH_LITTLE_ENDIAN
+ #elif defined(__pnacl__)

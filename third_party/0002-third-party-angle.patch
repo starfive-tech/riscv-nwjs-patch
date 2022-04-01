@@ -26,3 +26,16 @@ index 457b41792..a367d72f5 100644
      angle_64bit_current_cpu = true
    } else if (current_cpu == "arm" || current_cpu == "x86" ||
               current_cpu == "mipsel" || current_cpu == "s390" ||
+diff --git a/src/common/platform.h b/src/common/platform.h
+index c39c7e040..bd8a0a073 100644
+--- a/src/common/platform.h
++++ b/src/common/platform.h
+@@ -102,7 +102,7 @@
+ #endif
+ 
+ // Mips and arm devices need to include stddef for size_t.
+-#if defined(__mips__) || defined(__arm__) || defined(__aarch64__)
++#if defined(__mips__) || defined(__arm__) || defined(__aarch64__) || defined(__riscv)
+ #    include <stddef.h>
+ #endif
+ 
