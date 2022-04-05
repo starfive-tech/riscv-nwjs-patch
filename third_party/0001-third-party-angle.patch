@@ -1,8 +1,8 @@
 diff --git a/BUILD.gn b/BUILD.gn
-index aadf1b1ca..e77966791 100644
+index ef402486c..ea007dcce 100644
 --- a/BUILD.gn
 +++ b/BUILD.gn
-@@ -217,6 +217,9 @@ config("extra_warnings") {
+@@ -221,6 +221,9 @@ config("extra_warnings") {
        "-Wstrict-prototypes",
        "-Wunreachable-code-aggressive",
        "-Wshorten-64-to-32",
@@ -13,7 +13,7 @@ index aadf1b1ca..e77966791 100644
    }
  
 diff --git a/gni/angle.gni b/gni/angle.gni
-index 457b41792..a367d72f5 100644
+index 5ccddb13e..804acecd1 100644
 --- a/gni/angle.gni
 +++ b/gni/angle.gni
 @@ -74,7 +74,8 @@ declare_args() {
@@ -27,15 +27,17 @@ index 457b41792..a367d72f5 100644
    } else if (current_cpu == "arm" || current_cpu == "x86" ||
               current_cpu == "mipsel" || current_cpu == "s390" ||
 diff --git a/src/common/platform.h b/src/common/platform.h
-index c39c7e040..bd8a0a073 100644
+index c39c7e040..b68561cbf 100644
 --- a/src/common/platform.h
 +++ b/src/common/platform.h
-@@ -102,7 +102,7 @@
+@@ -101,8 +101,8 @@
+ #    define ANGLE_USE_SSE
  #endif
  
- // Mips and arm devices need to include stddef for size_t.
+-// Mips and arm devices need to include stddef for size_t.
 -#if defined(__mips__) || defined(__arm__) || defined(__aarch64__)
-+#if defined(__mips__) || defined(__arm__) || defined(__aarch64__) || defined(__riscv)
++// Mips, arm and riscv devices need to include stddef for size_t.
++#if defined(__mips__) || defined(__arm__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64)
  #    include <stddef.h>
  #endif
  
