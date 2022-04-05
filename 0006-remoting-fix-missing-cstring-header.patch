@@ -1,7 +1,7 @@
-From a4362673d7e8b4d57fbfcf7f176fc6ddcf82ec07 Mon Sep 17 00:00:00 2001
+From af73ddaaeb31c115b77bf372095f611ff88e8b48 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 13 Jan 2022 09:44:47 +0000
-Subject: [PATCH 05/21] remoting: fix missing cstring header
+Subject: [PATCH 06/18] remoting: fix missing cstring header
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

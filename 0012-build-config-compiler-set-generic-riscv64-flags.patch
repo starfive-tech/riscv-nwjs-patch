@@ -1,7 +1,7 @@
-From 46ae096bcc8291c6254f2a3d26860435b855a864 Mon Sep 17 00:00:00 2001
+From f6669b0988f1e40e2cfa0b58fb1e2bccd2af42ab Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 05:06:56 +0000
-Subject: [PATCH 11/21] build: config: compiler: set generic riscv64 flags
+Subject: [PATCH 12/18] build: config: compiler: set generic riscv64 flags
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
-index 0becd54d0728d..9af6b9b08eb02 100644
+index 2c8cfdaf3fee2..8b751c25f2229 100644
 --- a/build/config/compiler/BUILD.gn
 +++ b/build/config/compiler/BUILD.gn
-@@ -1171,6 +1171,12 @@ config("compiler_cpu_abi") {
+@@ -1157,6 +1157,12 @@ config("compiler_cpu_abi") {
          cflags += [ "-m64" ]
          ldflags += [ "-m64" ]
        }

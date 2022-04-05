@@ -1,7 +1,7 @@
-From 709f9e81fc71ae3d3f1b4850db91a38b1a9a3a87 Mon Sep 17 00:00:00 2001
+From 5282570bdd05f688bbc7f31d6a8cd3716f84a48b Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 09:07:44 +0000
-Subject: [PATCH 19/21] media: media_options: disable dav1d decoder
+Subject: [PATCH] media: media_options: disable dav1d decoder
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
@@ -22,7 +22,7 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  delete mode 100644 third_party/dav1d/BUILD.gn
 
 diff --git a/media/BUILD.gn b/media/BUILD.gn
-index e1683ef9e76ef..7d34fe24bd32f 100644
+index 01e0910666e86..e716c6604f546 100644
 --- a/media/BUILD.gn
 +++ b/media/BUILD.gn
 @@ -26,7 +26,6 @@ buildflag_header("media_buildflags") {
@@ -126,7 +126,7 @@ index 676a02b8ad3a0..541b7ffca7f92 100644
  #include "testing/gmock/include/gmock/gmock.h"
  
 diff --git a/media/gpu/video_decode_accelerator_tests.cc b/media/gpu/video_decode_accelerator_tests.cc
-index bce49fb05f659..1d122ce1c0624 100644
+index a6b95fef61746..636cb8fc38eda 100644
 --- a/media/gpu/video_decode_accelerator_tests.cc
 +++ b/media/gpu/video_decode_accelerator_tests.cc
 @@ -29,9 +29,7 @@
@@ -141,7 +141,7 @@ index bce49fb05f659..1d122ce1c0624 100644
  #endif
  
 diff --git a/media/media_options.gni b/media/media_options.gni
-index 1b2af27c5079d..55316f6f124d8 100644
+index 1b9eec3e63996..5a35f4960dffb 100644
 --- a/media/media_options.gni
 +++ b/media/media_options.gni
 @@ -74,7 +74,7 @@ declare_args() {
@@ -154,7 +154,7 @@ index 1b2af27c5079d..55316f6f124d8 100644
    # Enable browser managed persistent metadata storage for EME persistent
    # session and persistent usage record session.
 diff --git a/media/renderers/default_decoder_factory.cc b/media/renderers/default_decoder_factory.cc
-index f077e56c7eccc..a3b7917d07a06 100644
+index 430ec53038a84..7cfe5d072e759 100644
 --- a/media/renderers/default_decoder_factory.cc
 +++ b/media/renderers/default_decoder_factory.cc
 @@ -26,10 +26,6 @@
@@ -184,7 +184,7 @@ index 4afe60de61139..afad5ee5acfbf 100644
  #include "media/filters/ffmpeg_audio_decoder.h"
  #include "media/filters/ffmpeg_demuxer.h"
 diff --git a/media/video/software_video_encoder_test.cc b/media/video/software_video_encoder_test.cc
-index 21d7ccc59cd93..a72ec4aeb9562 100644
+index 4c8e81626dd78..e234ef927c33f 100644
 --- a/media/video/software_video_encoder_test.cc
 +++ b/media/video/software_video_encoder_test.cc
 @@ -43,9 +43,6 @@

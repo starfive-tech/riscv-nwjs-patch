@@ -1,7 +1,7 @@
-From 833b9aa306cddebc85956f32a79db032df9cf300 Mon Sep 17 00:00:00 2001
+From 1b78e8e37881b715f828b52bc61ab0cc725b38a9 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
-Date: Fri, 14 Jan 2022 07:17:39 +0000
-Subject: [PATCH 14/21] BUILD.gn: remove libjpeg-turbo
+Date: Tue, 5 Apr 2022 01:53:24 +0000
+Subject: [PATCH] BUILD.gn: remove libjpeg-turbo
 
 riscv64 is not supported in libjpeg-turbo.
 
@@ -11,10 +11,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/BUILD.gn b/BUILD.gn
-index 21d17e9c88fc3..31ac925dbe1b6 100644
+index f3bb841e5419a..d480858dff71a 100644
 --- a/BUILD.gn
 +++ b/BUILD.gn
-@@ -730,7 +730,6 @@ group("gn_all") {
+@@ -753,7 +753,6 @@ group("gn_all") {
        "//third_party/angle:libEGL",
        "//third_party/angle:libGLESv2",
        "//third_party/leveldatabase:leveldb_test_targets",
@@ -22,9 +22,9 @@ index 21d17e9c88fc3..31ac925dbe1b6 100644
        "//third_party/opus:opus_compare",
        "//third_party/opus:opus_demo",
        "//third_party/opus:test_opus_api",
-@@ -752,7 +751,6 @@ group("gn_all") {
-       if (enable_nacl) {
-         deps += [ "//native_client/src/trusted/platform_qualify:vcpuid" ]
+@@ -768,7 +767,6 @@ group("gn_all") {
+       if (!is_android) {
+         deps += [ "//chrome/test:load_library_perf_tests" ]
        }
 -      deps += [ "//third_party/libjpeg_turbo:simd_asm" ]
      }

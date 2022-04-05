@@ -73,7 +73,7 @@ solutions = [
 4. Checkout to specific commits where the patchset are based on.
 ```
 $ cd ~/chromium/src
-$ git checkout d02d5bc22b059
+$ git checkout 9fc37dca35728
 
 ```
 
@@ -124,15 +124,7 @@ $ cd ~/chromium/src
 $ git am <patch>
 ```
 
-8. Update swiftshader's dependencies.
-```
-$ cd third_party/swiftshader
-$ ./third_party/update-spirvtools.sh
-$ ./third_party/update-spirvheaders.sh
-$ ./third_party/update-marl.sh
-```
-
-9. Apply the patches in the untracked folder. This is due to third_party components are not tracked under the same git history.
+8. Apply the patches in the untracked folder. This is due to third_party components are not tracked under the same git history.
 
 NOTE: There is no script to help in this yet. So we have to run patch command manually in the respective folders.
 
@@ -142,7 +134,7 @@ $ cd third_party/<component>
 $ patch -p1 < ~/riscv64-chromium-patch/third_party/XXX.patch
 ```
 
-10. Setup ffmpeg.
+9. Setup ffmpeg.
 ```
 $ cd third_party/ffmpeg
 $ ./chromium/scripts/build_ffmpeg.py linux riscv64
@@ -150,7 +142,7 @@ $ ./chromium/scripts/generate_gn.py
 $ ./chromium/scripts/copy_config.sh
 ```
 
-11. Run the build and start resolving build issues.
+10. Run the build and start resolving build issues.
 ```
 $ autoninja -C out/riscv64 chrome
 ```

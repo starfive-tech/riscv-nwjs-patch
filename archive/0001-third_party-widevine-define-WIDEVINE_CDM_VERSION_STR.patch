@@ -1,7 +1,7 @@
-From 562ea279e3b0af137a08e0811cb7c9e9826bf3ab Mon Sep 17 00:00:00 2001
+From e10182c0a7811b7db6d77183df3c6befb299b527 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 13 Jan 2022 09:11:17 +0000
-Subject: [PATCH 04/21] third_party: widevine: define
+Subject: [PATCH] third_party: widevine: define
  WIDEVINE_CDM_VERSION_STRING
 
 Port over from Fedora's patch list.

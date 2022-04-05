@@ -1,9 +1,13 @@
-From b23cd494cf595e793e55107710630d1579af4dfa Mon Sep 17 00:00:00 2001
+From 34238a406f7c1d40b18b782faf5b1c2855f44107 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 13 Jan 2022 08:57:34 +0000
-Subject: [PATCH 03/21] chrome: common: remove unrar code
+Subject: [PATCH 13/18] chrome: common: remove unrar code
 
-unrar code is non-free.
+Upstream-status: Inappropriate
+
+unrar code is non-free. This might not be suitable for
+distributing as third_party. Hence we disabled it from
+our build.
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

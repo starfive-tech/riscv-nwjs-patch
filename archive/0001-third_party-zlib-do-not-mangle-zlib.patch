@@ -1,7 +1,7 @@
-From 616b0bd3e38cd4accdf74bed4ce1a2d683d57637 Mon Sep 17 00:00:00 2001
+From 1960ae0d483def599b1d8372f0514c89842e2843 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 13 Jan 2022 08:51:04 +0000
-Subject: [PATCH 02/21] third_party: zlib: do not mangle zlib
+Subject: [PATCH] third_party: zlib: do not mangle zlib
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
