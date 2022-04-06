@@ -1,4 +1,4 @@
-From 9b70be10cb461976d6d02922a5d36ae5476720ab Mon Sep 17 00:00:00 2001
+From a4939c0b3883152e6b092214d31560d2424bfa1a Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Tue, 5 Apr 2022 02:22:48 +0000
 Subject: [PATCH 04/18] base: allocator: partition_allocator: add riscv64
@@ -12,7 +12,7 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  create mode 100644 base/allocator/partition_allocator/starscan/stack/asm/riscv64/push_registers_asm.cc
 
 diff --git a/base/allocator/partition_allocator/BUILD.gn b/base/allocator/partition_allocator/BUILD.gn
-index 907f3435d5b2c..444ffd18ae32f 100644
+index 907f3435d5b2c..5747abb9383df 100644
 --- a/base/allocator/partition_allocator/BUILD.gn
 +++ b/base/allocator/partition_allocator/BUILD.gn
 @@ -160,6 +160,9 @@ target(partition_alloc_target_type, "partition_alloc") {
@@ -21,7 +21,7 @@ index 907f3435d5b2c..444ffd18ae32f 100644
      sources += [ "starscan/stack/asm/arm64/push_registers_asm.cc" ]
 +  } else if (current_cpu == "riscv64") {
 +    defines += [ "PA_PCSCAN_STACK_SUPPORTED" ]
-+    sources += [ "allocator/partition_allocator/starscan/stack/asm/riscv64/push_registers_asm.cc" ]
++    sources += [ "starscan/stack/asm/riscv64/push_registers_asm.cc" ]
    } else {
      # To support a trampoline for another arch, please refer to v8/src/heap/base.
    }
