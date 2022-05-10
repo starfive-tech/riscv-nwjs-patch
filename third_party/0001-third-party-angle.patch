@@ -1,19 +1,22 @@
 diff --git a/BUILD.gn b/BUILD.gn
-index ef402486c..ea007dcce 100644
+index 6e8a001a1..a59fb8116 100644
 --- a/BUILD.gn
 +++ b/BUILD.gn
-@@ -221,6 +221,9 @@ config("extra_warnings") {
+@@ -224,7 +224,12 @@ config("extra_warnings") {
        "-Wstrict-prototypes",
        "-Wunreachable-code-aggressive",
        "-Wshorten-64-to-32",
 +
 +      # Workaround for clang unable to locate pci/pci.h header
-+      "-isystem../../build/linux/debian_sid_riscv64-sysroot/usr/include/riscv64-linux-gnu",
++      "-I../../build/linux/debian_sid_riscv64-sysroot/usr/include/riscv64-linux-gnu",
      ]
++    # Workaround for linker unable to locate X11 related header
++    ldflags = [ "-Wl,-L../../build/linux/debian_sid_riscv64-sysroot/usr/lib/riscv64-linux-gnu" ]
    }
  
+   if (is_gcc) {
 diff --git a/gni/angle.gni b/gni/angle.gni
-index 5ccddb13e..804acecd1 100644
+index ac0273979..5d1f52eff 100644
 --- a/gni/angle.gni
 +++ b/gni/angle.gni
 @@ -74,7 +74,8 @@ declare_args() {

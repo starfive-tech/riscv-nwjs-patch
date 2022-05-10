@@ -1,7 +1,7 @@
-From 980d6f734be71176b619309ed76641846479927d Mon Sep 17 00:00:00 2001
+From 68ec2a3a6e740a8020fd39f3a81a943e982541d5 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 30 Mar 2022 06:38:26 +0000
-Subject: [PATCH 01/18] sandbox: add riscv arch definition and define syscall
+Subject: [PATCH 01/21] sandbox: add riscv arch definition and define syscall
  header
 
 Credit to work contributed in Github.
@@ -113,7 +113,7 @@ index 961a8cf7521ee..7c9a0c99e8fbe 100644
  #error Unsupported target platform
  
 diff --git a/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc b/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
-index 30c15cccb5c1f..06c6026a26fa2 100644
+index 90df076e15eb8..31d7b35349704 100644
 --- a/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
 +++ b/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
 @@ -60,6 +60,9 @@ bool IsBaselinePolicyAllowed(int sysno) {

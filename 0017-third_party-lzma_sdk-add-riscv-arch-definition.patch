@@ -1,7 +1,7 @@
-From 1d07d1083a701b124791de2aa86ad6b53276c3d4 Mon Sep 17 00:00:00 2001
+From 482529f5f69e3944e1b4419af54cc36bf2ab4177 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 05:07:31 +0000
-Subject: [PATCH 17/18] third_party: lzma_sdk: add riscv arch definition
+Subject: [PATCH 17/21] third_party: lzma_sdk: add riscv arch definition
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

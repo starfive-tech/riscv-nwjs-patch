@@ -1,7 +1,7 @@
-From 113b3389d4a9b3f596810a6d0b6e581cdc354e41 Mon Sep 17 00:00:00 2001
+From d19d7a13084f0d288bd7d04fafc5f052fe169cd5 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Mon, 17 Jan 2022 04:48:24 +0000
-Subject: [PATCH 09/18] build: config: compiler: use_gold linker option
+Subject: [PATCH 09/21] build: config: compiler: use_gold linker option
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/build/config/compiler/compiler.gni b/build/config/compiler/compiler.gni
-index 590bfc5da5ebb..4664363ab1a6a 100644
+index 0567598343ea6..f5080708c9483 100644
 --- a/build/config/compiler/compiler.gni
 +++ b/build/config/compiler/compiler.gni
-@@ -229,7 +229,7 @@ declare_args() {
+@@ -223,7 +223,7 @@ declare_args() {
               (((is_linux || is_chromeos_lacros) &&
                 (current_cpu == "x64" || current_cpu == "x86" ||
                  current_cpu == "arm" || current_cpu == "arm64" ||

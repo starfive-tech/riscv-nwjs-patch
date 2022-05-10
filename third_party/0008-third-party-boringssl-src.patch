@@ -1,5 +1,5 @@
 diff --git a/include/openssl/base.h b/include/openssl/base.h
-index 983eadc5d..8a66adbbc 100644
+index b63023664..a89a90e64 100644
 --- a/include/openssl/base.h
 +++ b/include/openssl/base.h
 @@ -118,6 +118,8 @@ extern "C" {

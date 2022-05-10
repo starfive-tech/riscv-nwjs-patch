@@ -1,5 +1,5 @@
 diff --git a/src/dawn/common/Platform.h b/src/dawn/common/Platform.h
-index f9471021f..cde974278 100644
+index 5e4f9d7ff..089824d52 100644
 --- a/src/dawn/common/Platform.h
 +++ b/src/dawn/common/Platform.h
 @@ -68,7 +68,7 @@
