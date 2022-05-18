@@ -5,51 +5,6 @@
 Ubuntu 20.04.4 LTS
 
 
-## Setup cross-compile toolchain
-
-### LLVM / Clang
-
-1. Build a cross-compile toolchain for llvm and clang.
-```
-$ sudo apt-get -y install binutils build-essential libtool \
-  texinfo gzip zip unzip patchutils curl git make cmake \
-  ninja-build automake bison flex gperf grep sed gawk \
-  python bc zlib1g-dev libexpat1-dev libmpc-dev \
-  libglib2.0-dev libfdt-dev libpixman-1-dev 
-
-$ mkdir ~/riscv
-$ cd ~/riscv
-$ mkdir _install
-$ export PATH=`pwd`/_install/bin:$PATH
-$ hash -r
-
-# gcc, binutils, newlib, qemu
-$ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
-$ pushd riscv-gnu-toolchain
-$ ./configure --prefix=`pwd`/../_install --enable-multilib
-$ make -j`nproc` linux
-$ make -j`nproc` build-qemu
-$ popd
-
-# llvm
-$ git clone https://github.com/llvm/llvm-project.git riscv-llvm
-$ pushd riscv-llvm
-$ ln -s ../../clang llvm/tools || true
-$ mkdir _build
-$ cd _build
-$ cmake -G Ninja -DCMAKE_BUILD_TYPE="Release" \
-  -DBUILD_SHARED_LIBS=True -DLLVM_USE_SPLIT_DWARF=True \
-  -DCMAKE_INSTALL_PREFIX="../../_install" \
-  -DLLVM_OPTIMIZED_TABLEGEN=True -DLLVM_BUILD_TESTS=False \
-  -DDEFAULT_SYSROOT="../../_install/riscv64-unknown-linux-gnu" \
-  -DLLVM_DEFAULT_TARGET_TRIPLE="riscv64-unknown-linux-gnu" \
-  -DLLVM_TARGETS_TO_BUILD="RISCV" \
-  ../llvm
-$ cmake --build . --target install
-$ popd
-```
-
-
 ## Chromium
 
 1. Follow the Chromium official build instruction for Linux host to get the source code.
@@ -73,7 +28,7 @@ solutions = [
 4. Checkout to specific commits where the patchset are based on.
 ```
 $ cd ~/chromium/src
-$ git checkout f0f889644bcd1
+$ git checkout 99ce2ebd79dc6
 
 ```
 
@@ -112,10 +67,6 @@ enable_jxl_decoder=false
 
 # For clang
 is_clang = true
-clang_base_path = getenv("HOME") + "/riscv/_install"
-clang_use_chrome_plugins = false
-use_gold = false
-use_lld = true
 ```
 
 7. Apply the patches from this repository.

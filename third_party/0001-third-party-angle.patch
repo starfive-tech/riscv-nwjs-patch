@@ -1,8 +1,8 @@
 diff --git a/BUILD.gn b/BUILD.gn
-index 6e8a001a1..a59fb8116 100644
+index b92e52fc2..8fd77fe35 100644
 --- a/BUILD.gn
 +++ b/BUILD.gn
-@@ -224,7 +224,12 @@ config("extra_warnings") {
+@@ -233,7 +233,12 @@ config("extra_warnings") {
        "-Wstrict-prototypes",
        "-Wunreachable-code-aggressive",
        "-Wshorten-64-to-32",
@@ -16,10 +16,10 @@ index 6e8a001a1..a59fb8116 100644
  
    if (is_gcc) {
 diff --git a/gni/angle.gni b/gni/angle.gni
-index ac0273979..5d1f52eff 100644
+index 20cef2679..1b23c9f6d 100644
 --- a/gni/angle.gni
 +++ b/gni/angle.gni
-@@ -74,7 +74,8 @@ declare_args() {
+@@ -76,7 +76,8 @@ declare_args() {
  
    if (current_cpu == "arm64" || current_cpu == "x64" ||
        current_cpu == "mips64el" || current_cpu == "s390x" ||
