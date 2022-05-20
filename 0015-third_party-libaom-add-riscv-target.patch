@@ -1,7 +1,7 @@
 From 7c1c6ca12315892184dcdc154e0f1254dbf7b062 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 30 Mar 2022 11:24:25 +0000
-Subject: [PATCH 15/22] third_party: libaom: add riscv target
+Subject: [PATCH 15/23] third_party: libaom: add riscv target
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

@@ -1,7 +1,7 @@
 From 89e1e2acf8c1c57d5f833b60a5f40a9b89440e51 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 18 May 2022 06:00:28 +0000
-Subject: [PATCH 01/22] linux: sysroot: script to create riscv sysroot from
+Subject: [PATCH 01/23] linux: sysroot: script to create riscv sysroot from
  Debian ports
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>

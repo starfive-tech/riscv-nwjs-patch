@@ -1,7 +1,7 @@
 From 69881d81443cd78aa9aca83ffc15298325ab9bdc Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 28 Apr 2022 01:03:56 +0000
-Subject: [PATCH 20/22] workaround for files not found in sysroot
+Subject: [PATCH 20/23] workaround for files not found in sysroot
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

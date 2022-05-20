@@ -5,6 +5,46 @@
 Ubuntu 20.04.4 LTS
 
 
+## llvm / clang
+
+1. Build a cross-compile toolchain for llvm and clang.
+```
+$ sudo apt-get -y install binutils build-essential libtool \
+  texinfo gzip zip unzip patchutils curl git make cmake \
+  ninja-build automake bison flex gperf grep sed gawk \
+  python bc zlib1g-dev libexpat1-dev libmpc-dev \
+  libglib2.0-dev libfdt-dev libpixman-1-dev 
+$ mkdir ~/riscv
+$ cd ~/riscv
+$ mkdir _install
+$ export PATH=`pwd`/_install/bin:$PATH
+$ hash -r
+# gcc, binutils, newlib, qemu
+$ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+$ pushd riscv-gnu-toolchain
+$ ./configure --prefix=`pwd`/../_install --enable-multilib
+$ make -j`nproc` linux
+$ make -j`nproc` build-qemu
+$ popd
+# llvm
+$ git clone https://github.com/llvm/llvm-project.git riscv-llvm
+$ pushd riscv-llvm
+$ ln -s ../../clang llvm/tools || true
+$ mkdir _build
+$ cd _build
+$ cmake -G Ninja -DCMAKE_BUILD_TYPE="Release" \
+  -DBUILD_SHARED_LIBS=True -DLLVM_USE_SPLIT_DWARF=True \
+  -DCMAKE_INSTALL_PREFIX="../../_install" \
+  -DLLVM_OPTIMIZED_TABLEGEN=True -DLLVM_BUILD_TESTS=False \
+  -DDEFAULT_SYSROOT="../../_install/riscv64-unknown-linux-gnu" \
+  -DLLVM_DEFAULT_TARGET_TRIPLE="riscv64-unknown-linux-gnu" \
+  -DLLVM_TARGETS_TO_BUILD="RISCV" \
+  ../llvm
+$ cmake --build . --target install
+$ popd
+```
+
+
 ## Chromium
 
 1. Follow the Chromium official build instruction for Linux host to get the source code.
@@ -25,10 +65,10 @@ solutions = [
 ]
 ```
 
-4. Checkout to specific commits where the patchset are based on.
+4. Checkout to 104.0.5070.0 tag where the patchset are based on.
 ```
 $ cd ~/chromium/src
-$ git checkout 99ce2ebd79dc6
+$ git checkout 104.0.5070.0
 
 ```
 
@@ -45,11 +85,17 @@ $ vim out/riscv64/args.gn
 target_os="linux"
 target_cpu="riscv64"
 
+use_custom_libcxx=false
+use_custom_libcxx_for_host=true
+
 is_component_build = true
 is_debug=false
 symbol_level=0
 v8_symbol_level=0
 blink_symbol_level=0
+
+enable_swiftshader=true
+enable_libaom=true
 
 # Disable broken features
 use_gnome_keyring=false
@@ -59,14 +105,16 @@ fatal_linker_warnings=false
 enable_dav1d_decoder = false
 enable_reading_list=false
 enable_vr=false
-enable_swiftshader=false
 supports_subzero=false
-enable_libaom=false
 enable_openscreen=false
 enable_jxl_decoder=false
 
 # For clang
 is_clang = true
+clang_base_path=getenv("HOME") + "/riscv/_install"
+clang_use_chrome_plugins=false
+use_lld=true
+#use_thin_lto=false
 ```
 
 7. Apply the patches from this repository.

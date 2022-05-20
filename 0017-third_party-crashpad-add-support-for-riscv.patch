@@ -1,7 +1,7 @@
 From 62457fa5271a6b22210ec0adefe6fee944f785f7 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 31 Mar 2022 00:35:10 +0000
-Subject: [PATCH 17/22] third_party: crashpad: add support for riscv
+Subject: [PATCH 17/23] third_party: crashpad: add support for riscv
 
 Credit to work contributed in Github.
 https://github.com/felixonmars/archriscv-packages/tree/master/chromium

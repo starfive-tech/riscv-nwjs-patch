@@ -1,7 +1,7 @@
 From 00827741648ebd7d5f98e5f9fd718ad2f7435785 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 28 Apr 2022 01:04:59 +0000
-Subject: [PATCH 22/22] compiler workaround
+Subject: [PATCH 22/23] compiler workaround
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

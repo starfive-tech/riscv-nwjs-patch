@@ -16,10 +16,10 @@ index b92e52fc2..8fd77fe35 100644
  
    if (is_gcc) {
 diff --git a/gni/angle.gni b/gni/angle.gni
-index 20cef2679..1b23c9f6d 100644
+index cbe35e044..ef47c651a 100644
 --- a/gni/angle.gni
 +++ b/gni/angle.gni
-@@ -76,7 +76,8 @@ declare_args() {
+@@ -77,7 +77,8 @@ declare_args() {
  
    if (current_cpu == "arm64" || current_cpu == "x64" ||
        current_cpu == "mips64el" || current_cpu == "s390x" ||

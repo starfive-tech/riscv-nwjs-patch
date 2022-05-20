@@ -1,7 +1,7 @@
 From 796fe4577f25873b97485b430b1fd17d72d4fcea Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 13 Jan 2022 08:57:34 +0000
-Subject: [PATCH 14/22] chrome: common: remove unrar code
+Subject: [PATCH 14/23] chrome: common: remove unrar code
 
 Upstream-status: Inappropriate
 

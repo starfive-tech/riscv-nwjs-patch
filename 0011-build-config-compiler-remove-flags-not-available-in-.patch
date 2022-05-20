@@ -1,7 +1,7 @@
 From 1cce24d3de450d4ea65b66886f64b3a769d119d3 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Mon, 17 Jan 2022 08:15:52 +0000
-Subject: [PATCH 11/22] build: config: compiler: remove flags not available in
+Subject: [PATCH 11/23] build: config: compiler: remove flags not available in
  custom clang
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>

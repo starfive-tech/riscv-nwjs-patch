@@ -1,7 +1,7 @@
 From 3a0f884a18211957feb88fd6ee650c75051e3c8e Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Tue, 5 Apr 2022 02:22:48 +0000
-Subject: [PATCH 05/22] base: allocator: partition_allocator: add riscv64
+Subject: [PATCH 05/23] base: allocator: partition_allocator: add riscv64
  support
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>

@@ -1,7 +1,7 @@
 From 34419d06a338f38be840773b44c049e694146962 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Fri, 14 Jan 2022 05:06:56 +0000
-Subject: [PATCH 13/22] build: config: compiler: set generic riscv64 flags
+Subject: [PATCH 13/23] build: config: compiler: set generic riscv64 flags
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
