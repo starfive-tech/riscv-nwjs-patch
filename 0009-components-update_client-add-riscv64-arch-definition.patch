@@ -1,7 +1,7 @@
-From b919c1f1a31b647ef3f5f124c22f5ee0b5950f08 Mon Sep 17 00:00:00 2001
+From e7cc091068534e90a7c3b4077b2bf04c6b93a7c4 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Tue, 5 Apr 2022 02:27:27 +0000
-Subject: [PATCH 09/23] components: update_client: add riscv64 arch definition
+Subject: [PATCH 09/21] components: update_client: add riscv64 arch definition
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---

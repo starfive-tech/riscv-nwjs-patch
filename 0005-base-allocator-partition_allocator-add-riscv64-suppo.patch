@@ -1,7 +1,7 @@
-From 3a0f884a18211957feb88fd6ee650c75051e3c8e Mon Sep 17 00:00:00 2001
+From 562b84239679c524a687d6fe51b4f15d87665415 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Tue, 5 Apr 2022 02:22:48 +0000
-Subject: [PATCH 05/23] base: allocator: partition_allocator: add riscv64
+Subject: [PATCH 05/21] base: allocator: partition_allocator: add riscv64
  support
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
@@ -12,10 +12,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  create mode 100644 base/allocator/partition_allocator/starscan/stack/asm/riscv64/push_registers_asm.cc
 
 diff --git a/base/allocator/partition_allocator/BUILD.gn b/base/allocator/partition_allocator/BUILD.gn
-index d8272085d9676..262a57bcbc209 100644
+index 0aa0c78692c0c..68814667eee52 100644
 --- a/base/allocator/partition_allocator/BUILD.gn
 +++ b/base/allocator/partition_allocator/BUILD.gn
-@@ -225,6 +225,9 @@ target(partition_alloc_target_type, "partition_alloc") {
+@@ -268,6 +268,9 @@ target(partition_alloc_target_type, "partition_alloc") {
    } else if (current_cpu == "arm64") {
      defines += [ "PA_PCSCAN_STACK_SUPPORTED" ]
      sources += [ "starscan/stack/asm/arm64/push_registers_asm.cc" ]

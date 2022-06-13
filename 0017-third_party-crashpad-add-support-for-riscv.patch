@@ -1,7 +1,7 @@
-From 62457fa5271a6b22210ec0adefe6fee944f785f7 Mon Sep 17 00:00:00 2001
+From 57fb23b78c06744d5e7c688d6716bcbff4b48e55 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 31 Mar 2022 00:35:10 +0000
-Subject: [PATCH 17/23] third_party: crashpad: add support for riscv
+Subject: [PATCH 17/21] third_party: crashpad: add support for riscv
 
 Credit to work contributed in Github.
 https://github.com/felixonmars/archriscv-packages/tree/master/chromium
@@ -77,7 +77,7 @@ index c10743d84899d..616b43654d11f 100644
  
  #endif  // CRASHPAD_MINIDUMP_MINIDUMP_CONTEXT_H_
 diff --git a/third_party/crashpad/crashpad/minidump/minidump_context_writer.cc b/third_party/crashpad/crashpad/minidump/minidump_context_writer.cc
-index 6ae25b8fe12f8..cfd86fa9f4d58 100644
+index bf02c1bd28926..796c8b5383613 100644
 --- a/third_party/crashpad/crashpad/minidump/minidump_context_writer.cc
 +++ b/third_party/crashpad/crashpad/minidump/minidump_context_writer.cc
 @@ -102,6 +102,13 @@ MinidumpContextWriter::CreateFromSnapshot(const CPUContext* context_snapshot) {
@@ -94,7 +94,7 @@ index 6ae25b8fe12f8..cfd86fa9f4d58 100644
      default: {
        LOG(ERROR) << "unknown context architecture "
                   << context_snapshot->architecture;
-@@ -557,4 +564,41 @@ size_t MinidumpContextMIPS64Writer::ContextSize() const {
+@@ -556,4 +563,41 @@ size_t MinidumpContextMIPS64Writer::ContextSize() const {
    return sizeof(context_);
  }
  

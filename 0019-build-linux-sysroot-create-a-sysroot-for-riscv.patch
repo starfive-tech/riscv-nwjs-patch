@@ -1,7 +1,7 @@
-From 5254439289bd00f5fb9269f3abfa3625c4c80040 Mon Sep 17 00:00:00 2001
+From c0d3509f68c1fd87bf107283ad7a24e8249f6a10 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Tue, 5 Apr 2022 06:40:16 +0000
-Subject: [PATCH 19/23] build: linux: sysroot: create a sysroot for riscv
+Subject: [PATCH 19/21] build: linux: sysroot: create a sysroot for riscv
 
 Upstream-status: Unidentified
 

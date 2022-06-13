@@ -1,7 +1,7 @@
-From 583d891f4642244c5249065bdde985aa9940d4f0 Mon Sep 17 00:00:00 2001
+From d4acfec99e4386a9fe985fc565bd49cc5c368f14 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Thu, 13 Jan 2022 09:44:47 +0000
-Subject: [PATCH 07/23] remoting: fix missing cstring header
+Subject: [PATCH 07/21] remoting: fix missing cstring header
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
@@ -13,7 +13,7 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  5 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/remoting/base/util.cc b/remoting/base/util.cc
-index 20eedfb3a34cb..4c1fdcc75ca7d 100644
+index df36b1b8ee848..b80da87b4f558 100644
 --- a/remoting/base/util.cc
 +++ b/remoting/base/util.cc
 @@ -3,7 +3,7 @@

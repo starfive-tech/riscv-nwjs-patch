@@ -1,7 +1,7 @@
-From 89e1e2acf8c1c57d5f833b60a5f40a9b89440e51 Mon Sep 17 00:00:00 2001
+From ceef9e02d5fd787605d0babc94570ca41d8f7a2e Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 18 May 2022 06:00:28 +0000
-Subject: [PATCH 01/23] linux: sysroot: script to create riscv sysroot from
+Subject: [PATCH 01/21] linux: sysroot: script to create riscv sysroot from
  Debian ports
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
@@ -434,7 +434,7 @@ index 0000000000000..f8c01b96256d5
 +
 +. "${SCRIPT_DIR}/sysroot-creator.sh"
 diff --git a/build/linux/sysroot_scripts/sysroot-creator.sh b/build/linux/sysroot_scripts/sysroot-creator.sh
-index bde29db92ba02..b252c28a166a4 100644
+index fb854cbfa4d6b..c46edc8224465 100644
 --- a/build/linux/sysroot_scripts/sysroot-creator.sh
 +++ b/build/linux/sysroot_scripts/sysroot-creator.sh
 @@ -51,6 +51,7 @@ readonly HAS_ARCH_ARM64=${HAS_ARCH_ARM64:=0}
@@ -474,7 +474,7 @@ index bde29db92ba02..b252c28a166a4 100644
  StripChecksumsFromPackageList() {
    local package_file="$1"
    sed -i 's/ [a-f0-9]\{64\}$//' "$package_file"
-@@ -402,13 +411,11 @@ HacksAndPatchesAmd64() {
+@@ -407,13 +416,11 @@ HacksAndPatchesAmd64() {
    ReversionGlibc x86_64 linux-gnu
  }
  
@@ -488,7 +488,7 @@ index bde29db92ba02..b252c28a166a4 100644
  HacksAndPatchesARM() {
    HacksAndPatchesCommon arm linux-gnueabihf arm-linux-gnueabihf-strip
    ReversionGlibc arm linux-gnueabihf
-@@ -433,12 +440,15 @@ HacksAndPatchesMips() {
+@@ -438,12 +445,15 @@ HacksAndPatchesMips() {
    ReversionGlibc mipsel linux-gnu
  }
  
@@ -505,7 +505,7 @@ index bde29db92ba02..b252c28a166a4 100644
  
  InstallIntoSysroot() {
    Banner "Install Libs And Headers Into Jail"
-@@ -489,7 +499,7 @@ CleanupJailSymlinks() {
+@@ -494,7 +504,7 @@ CleanupJailSymlinks() {
    cd ${INSTALL_ROOT}
    local libdirs="lib usr/lib"
    if [ "${ARCH}" != "MIPS" ]; then
@@ -514,7 +514,7 @@ index bde29db92ba02..b252c28a166a4 100644
    fi
  
    find $libdirs -type l -printf '%p %l\n' | while read link target; do
-@@ -532,6 +542,7 @@ VerifyLibraryDepsCommon() {
+@@ -537,6 +547,7 @@ VerifyLibraryDepsCommon() {
    local all_libs="$(find ${find_dirs[*]} -printf '%f\n')"
    # Ignore missing libdbus-1.so.0
    all_libs+="$(echo -e '\nlibdbus-1.so.0')"
@@ -522,7 +522,7 @@ index bde29db92ba02..b252c28a166a4 100644
    local missing_libs="$(grep -vFxf <(echo "${all_libs}") \
      <(echo "${needed_libs}"))"
    if [ ! -z "${missing_libs}" ]; then
-@@ -546,17 +557,14 @@ VerifyLibraryDepsAmd64() {
+@@ -551,17 +562,14 @@ VerifyLibraryDepsAmd64() {
    VerifyLibraryDepsCommon x86_64 linux-gnu
  }
  
@@ -540,7 +540,7 @@ index bde29db92ba02..b252c28a166a4 100644
  VerifyLibraryDepsARM64() {
    VerifyLibraryDepsCommon aarch64 linux-gnu
  }
-@@ -569,11 +577,14 @@ VerifyLibraryDepsMips() {
+@@ -574,11 +582,14 @@ VerifyLibraryDepsMips() {
    VerifyLibraryDepsCommon mipsel linux-gnu
  }
  
@@ -556,7 +556,7 @@ index bde29db92ba02..b252c28a166a4 100644
  
  #@
  #@ BuildSysrootAmd64
-@@ -715,6 +726,26 @@ BuildSysrootMips64el() {
+@@ -720,6 +731,26 @@ BuildSysrootMips64el() {
    CreateTarBall
  }
  
@@ -583,7 +583,7 @@ index bde29db92ba02..b252c28a166a4 100644
  #@
  #@ BuildSysrootAll
  #@
-@@ -890,7 +921,7 @@ GeneratePackageList() {
+@@ -895,7 +926,7 @@ GeneratePackageList() {
    local failed=0
    for pkg in $@ ; do
      local pkg_full=$(grep -A 1 " ${pkg}\$" "$input_file" | \
@@ -592,7 +592,7 @@ index bde29db92ba02..b252c28a166a4 100644
      if [ -z "${pkg_full}" ]; then
        echo "ERROR: missing package: $pkg"
        local failed=1
-@@ -937,6 +968,9 @@ PrintArchitectures() {
+@@ -942,6 +973,9 @@ PrintArchitectures() {
    if [ "$HAS_ARCH_MIPS64EL" = "1" ]; then
      echo Mips64el
    fi

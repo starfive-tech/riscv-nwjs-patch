@@ -1,7 +1,7 @@
-From 04f0043bacafe896df0633fd6450a3b751399fcc Mon Sep 17 00:00:00 2001
+From b607596fa6128fd4052a187075f7d1c91ac06f8f Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 30 Mar 2022 06:38:26 +0000
-Subject: [PATCH 02/23] sandbox: add riscv arch definition and define syscall
+Subject: [PATCH 02/21] sandbox: add riscv arch definition and define syscall
  header
 
 Credit to work contributed in Github.

@@ -1,7 +1,7 @@
-From 87a9190952f0cd3b47d55c37e6125a95028aa4a1 Mon Sep 17 00:00:00 2001
+From c6c9e34871fb5cefebd72b2a213471f766582aa8 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Tue, 10 May 2022 02:21:16 +0000
-Subject: [PATCH 06/23] base: process: add riscv64 arch definition
+Subject: [PATCH 06/21] base: process: add riscv64 arch definition
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
