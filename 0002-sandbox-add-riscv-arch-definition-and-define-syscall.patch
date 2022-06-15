@@ -1,4 +1,4 @@
-From 6329d77e50c3289d21cd5b79204871352e93938f Mon Sep 17 00:00:00 2001
+From 84da4a17ea04e573dbed6d5fc4dcb71bd71c2b63 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 15 Jun 2022 08:27:45 +0000
 Subject: [PATCH] sandbox: add riscv arch definition and define syscall
@@ -197,7 +197,7 @@ index 9728d0b52e68..6f6e3984028b 100644
                   PTRACE_GETREGSET,
  #endif
 diff --git a/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc b/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
-index b3cf6fc7e86f..906b798b5c04 100644
+index b3cf6fc7e86f..5e0acc32c893 100644
 --- a/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
 +++ b/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
 @@ -103,7 +103,7 @@ bool SyscallSets::IsUmask(int sysno) {
@@ -214,7 +214,7 @@ index b3cf6fc7e86f..906b798b5c04 100644
      case __NR_fchmodat:
      case __NR_fchownat:  // Should be called chownat ?
 -#if defined(__x86_64__) || defined(__aarch64__)
-+#if defined(__x86_64__) || defined(__aarch64__) || && defined(__riscv)
++#if defined(__x86_64__) || defined(__aarch64__) && defined(__riscv)
      case __NR_newfstatat:  // fstatat(). EPERM not a valid errno.
  #elif defined(__i386__) || defined(__arm__) || \
      (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_32_BITS))
