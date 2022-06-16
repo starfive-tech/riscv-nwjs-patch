@@ -1,4 +1,4 @@
-From 917c9477fcc0d7f11fca87ecabce44c74be0a81b Mon Sep 17 00:00:00 2001
+From dda0b84e776a01b77c87f40af98713dfa303482d Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Wed, 15 Jun 2022 08:27:45 +0000
 Subject: [PATCH] sandbox: add riscv arch definition and define syscall
@@ -15,7 +15,7 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  .../seccomp-bpf-helpers/baseline_policy.cc    |    9 +-
  .../syscall_parameters_restrictions.cc        |    3 +-
  .../linux/seccomp-bpf-helpers/syscall_sets.cc |   71 +-
- .../linux/seccomp-bpf-helpers/syscall_sets.h  |   11 +-
+ .../linux/seccomp-bpf-helpers/syscall_sets.h  |   14 +-
  sandbox/linux/seccomp-bpf/syscall.cc          |   35 +-
  sandbox/linux/services/credentials.cc         |    2 +-
  sandbox/linux/services/syscall_wrappers.cc    |    2 +-
@@ -27,7 +27,7 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  .../system_headers/riscv64_linux_syscalls.h   | 1074 +++++++++++++++++
  .../linux/bpf_cros_amd_gpu_policy_linux.cc    |    2 +-
  sandbox/policy/linux/bpf_gpu_policy_linux.cc  |    2 +-
- 19 files changed, 1249 insertions(+), 53 deletions(-)
+ 19 files changed, 1251 insertions(+), 54 deletions(-)
  create mode 100644 sandbox/linux/system_headers/riscv64_linux_syscalls.h
 
 diff --git a/sandbox/features.gni b/sandbox/features.gni
@@ -478,7 +478,7 @@ index b3cf6fc7e86f..39dceabf07c3 100644
  bool SyscallSets::IsMipsPrivate(int sysno) {
    switch (sysno) {
 diff --git a/sandbox/linux/seccomp-bpf-helpers/syscall_sets.h b/sandbox/linux/seccomp-bpf-helpers/syscall_sets.h
-index 6403f45dc2f7..dd7cb8ca17ec 100644
+index 6403f45dc2f7..7110d3f6999c 100644
 --- a/sandbox/linux/seccomp-bpf-helpers/syscall_sets.h
 +++ b/sandbox/linux/seccomp-bpf-helpers/syscall_sets.h
 @@ -52,7 +52,7 @@ class SANDBOX_EXPORT SyscallSets {
@@ -490,7 +490,7 @@ index 6403f45dc2f7..dd7cb8ca17ec 100644
    static bool IsNetworkSocketInformation(int sysno);
  #endif
  
-@@ -79,12 +79,14 @@ class SANDBOX_EXPORT SyscallSets {
+@@ -79,18 +79,21 @@ class SANDBOX_EXPORT SyscallSets {
    static bool IsAsyncIo(int sysno);
    static bool IsKeyManagement(int sysno);
  #if defined(__x86_64__) || defined(__arm__) || defined(__aarch64__) || \
@@ -507,7 +507,15 @@ index 6403f45dc2f7..dd7cb8ca17ec 100644
    // These give a lot of ambient authority and bypass the setuid sandbox.
    static bool IsSystemVSharedMemory(int sysno);
  #endif
-@@ -117,6 +119,9 @@ class SANDBOX_EXPORT SyscallSets {
+ 
+ #if defined(__x86_64__) || defined(__arm__) || defined(__aarch64__) || \
+-    (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_64_BITS))
++    (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_64_BITS)) || \
++    defined(__riscv)
+   static bool IsSystemVMessageQueue(int sysno);
+ #endif
+ 
+@@ -117,6 +120,9 @@ class SANDBOX_EXPORT SyscallSets {
    static bool IsMipsPrivate(int sysno);
    static bool IsMipsMisc(int sysno);
  #endif  // defined(__mips__)
