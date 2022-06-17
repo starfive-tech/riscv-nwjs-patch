@@ -1,0 +1,30 @@
+From 96e93f17115bf90b309a8a82d45d90788a92f3ca Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 17 Jun 2022 06:19:14 +0000
+Subject: [PATCH] build: config: compiler: do not use linker relaxation
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/compiler/BUILD.gn | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+index 676efeddd22bd..5d82fa963d7b7 100644
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -1177,10 +1177,12 @@ config("compiler_cpu_abi") {
+       }
+     } else if (current_cpu == "riscv64") {
+       cflags += [
++        "-mno-relax",
+         "-mabi=lp64d",
+         "--target=riscv64-linux-gnu",
+       ]
+       ldflags += [
++        "-mno-relax",
+         "--target=riscv64-linux-gnu",
+       ]
+     } else if (current_cpu == "s390x") {
+-- 
+2.25.1
+
