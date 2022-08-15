@@ -1,0 +1,25 @@
+From c9176f9e0294c1e5e7f0642cc4b3a88ede579a53 Mon Sep 17 00:00:00 2001
+From: Tien Hock Loh - swbuildbot <tienhock.loh@starfivetech.com>
+Date: Mon, 15 Aug 2022 05:57:59 +0000
+Subject: [PATCH 51/51] build: config: compiler: add rpath-link for rv64
+
+Signed-off-by: Tien Hock Loh - swbuildbot <tienhock.loh@starfivetech.com>
+---
+ build/config/compiler/BUILD.gn | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+index 2275a63517df..30250910de64 100644
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -1193,6 +1193,7 @@ config("compiler_cpu_abi") {
+       ldflags += [
+         "--target=riscv64-linux-gnu",
+         "-mno-relax",
++        "-Wl,-rpath-link=./lib",
+       ]
+     } else if (current_cpu == "s390x") {
+       cflags += [ "-m64" ]
+-- 
+2.25.1
+

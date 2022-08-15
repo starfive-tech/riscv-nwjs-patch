@@ -1,0 +1,34 @@
+From e7fe5c06b208413892eee27f3f74f443fdbea03a Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 17 Jun 2022 06:06:06 +0000
+Subject: [PATCH 24/51] build: config: linux: workaround for files not found
+ within sysroot
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/linux/BUILD.gn | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/build/config/linux/BUILD.gn b/build/config/linux/BUILD.gn
+index b897c9920bc8..0059f66aa010 100644
+--- a/build/config/linux/BUILD.gn
++++ b/build/config/linux/BUILD.gn
+@@ -27,6 +27,15 @@ config("compiler") {
+       asmflags += [ "-mbranch-protection=pac-ret" ]
+     }
+   }
++
++  if (current_cpu == "riscv64") {
++    cflags = []
++    cflags += [ "-I../../build/linux/debian_sid_riscv64-sysroot/usr/include",
++                "-I../../build/linux/debian_sid_riscv64-sysroot/usr/include/riscv64-linux-gnu",
++                "-I../../build/linux/debian_sid_riscv64-sysroot/usr/lib",
++                "-I../../build/linux/debian_sid_riscv64-sysroot/usr/lib/riscv64-linux-gnu",
++    ]
++  }
+ }
+ 
+ # This is included by reference in the //build/config/compiler:runtime_library
+-- 
+2.25.1
+

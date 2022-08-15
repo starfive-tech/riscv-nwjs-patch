@@ -1,0 +1,25 @@
+From 4261c7ea5e64cd479e1a8a1bcc1870a13a81c862 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 17 Jun 2022 05:49:33 +0000
+Subject: [PATCH 12/51] ui: gl: enable swiftshader for riscv64
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ ui/gl/features.gni | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ui/gl/features.gni b/ui/gl/features.gni
+index 1bbc06c62715..3951bc279222 100644
+--- a/ui/gl/features.gni
++++ b/ui/gl/features.gni
+@@ -31,5 +31,6 @@ declare_args() {
+                         (is_mac && use_egl) || is_chromeos_ash || is_fuchsia) &&
+                        (target_cpu == "x86" || target_cpu == "x64" ||
+                         target_cpu == "arm" || target_cpu == "arm64" ||
+-                        target_cpu == "mipsel" || target_cpu == "mips64el")
++                        target_cpu == "mipsel" || target_cpu == "mips64el" ||
++                        target_cpu == "riscv64")
+ }
+-- 
+2.25.1
+

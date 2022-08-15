@@ -1,0 +1,27 @@
+From 9f6c1313fc8e1622b36ed29b6997be817084975b Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 3 Aug 2022 17:19:28 +0800
+Subject: [PATCH 07/51] tflite_support: fix absolute value function 'abs' when
+ argument is floating point
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ .../src/tensorflow_lite_support/cc/task/core/category.h         | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/tflite_support/src/tensorflow_lite_support/cc/task/core/category.h b/third_party/tflite_support/src/tensorflow_lite_support/cc/task/core/category.h
+index 9fadd6a5cfe8..8dfed71da46d 100644
+--- a/third_party/tflite_support/src/tensorflow_lite_support/cc/task/core/category.h
++++ b/third_party/tflite_support/src/tensorflow_lite_support/cc/task/core/category.h
+@@ -33,7 +33,7 @@ struct Category {
+   friend bool operator==(const Category& lhs, const Category& rhs) {
+     constexpr const double kScoreTolerance = 1e-6;
+     return lhs.class_name == rhs.class_name &&
+-           abs((double)(lhs.score - rhs.score)) <= kScoreTolerance;
++           fabs((double)(lhs.score - rhs.score)) <= kScoreTolerance;
+   }
+ 
+   friend bool operator!=(const Category& lhs, const Category& rhs) {
+-- 
+2.25.1
+

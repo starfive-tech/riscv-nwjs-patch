@@ -1,0 +1,27 @@
+From 64fb9d7aa7736438a01fd101b71dfbfef79e07d9 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Mon, 25 Jul 2022 10:15:24 +0800
+Subject: [PATCH 10/51] tools: clang: script: add atomic build flag for native
+ build
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ tools/clang/scripts/build.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/tools/clang/scripts/build.py b/tools/clang/scripts/build.py
+index 299d3755d1a9..a8a1fb1a732f 100755
+--- a/tools/clang/scripts/build.py
++++ b/tools/clang/scripts/build.py
+@@ -642,6 +642,8 @@ def main():
+       '-DENABLE_X86_RELAX_RELOCATIONS=NO',
+       # See crbug.com/1126219: Use native symbolizer instead of DIA
+       '-DLLVM_ENABLE_DIA_SDK=OFF',
++      # StarFive: Required for native RISCV build
++      '-DSANITIZER_COMMON_LINK_LIBS=-latomic',
+       # See crbug.com/1205046: don't build scudo (and others we don't need).
+       '-DCOMPILER_RT_SANITIZERS_TO_BUILD=asan;dfsan;msan;hwasan;tsan;cfi',
+       # The default value differs per platform, force it off everywhere.
+-- 
+2.25.1
+

@@ -1,0 +1,26 @@
+From 065b87193f2098ba82e33e6eb1eda17ca275f5b5 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Thu, 14 Jul 2022 06:40:36 +0000
+Subject: [PATCH 39/51] pkg-config.py: add riscv sysroot path to system_libdir
+
+Signed-off-by: Loh Tien Hock <tienhock.loh@starfivetech.com>
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/linux/pkg-config.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/build/config/linux/pkg-config.py b/build/config/linux/pkg-config.py
+index 5adf70cc3bb3..16ad90ca05e2 100755
+--- a/build/config/linux/pkg-config.py
++++ b/build/config/linux/pkg-config.py
+@@ -61,6 +61,7 @@ def SetConfigPath(options):
+ 
+   libdir = sysroot + '/usr/' + options.system_libdir + '/pkgconfig'
+   libdir += ':' + sysroot + '/usr/share/pkgconfig'
++  libdir += ':' + sysroot + '/usr/' + options.system_libdir + '/riscv64-linux-gnu/pkgconfig'
+   os.environ['PKG_CONFIG_LIBDIR'] = libdir
+   return libdir
+ 
+-- 
+2.25.1
+

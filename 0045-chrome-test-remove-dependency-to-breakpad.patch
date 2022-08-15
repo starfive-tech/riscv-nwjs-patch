@@ -1,0 +1,35 @@
+From ea9f17b755a42112c4ce9091c0fdc12d4635d904 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Mon, 18 Jul 2022 01:15:47 +0000
+Subject: [PATCH 45/51] chrome: test: remove dependency to breakpad
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ chrome/test/BUILD.gn | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/chrome/test/BUILD.gn b/chrome/test/BUILD.gn
+index a55d15860d58..dfa043daf2bc 100644
+--- a/chrome/test/BUILD.gn
++++ b/chrome/test/BUILD.gn
+@@ -401,7 +401,6 @@ static_library("test_support") {
+     ]
+     public_deps += [
+       "//components/crash/core/app",
+-      "//third_party/breakpad",
+     ]
+   }
+ 
+@@ -9298,9 +9297,6 @@ test("chrome_app_unittests") {
+     "//components/heap_profiling/in_process",
+     "//components/safe_browsing:buildflags",
+   ]
+-  if (!is_fuchsia) {
+-    deps += [ "//third_party/breakpad:client" ]
+-  }
+   if (enable_gwp_asan) {
+     deps += [ "//components/gwp_asan/client" ]
+   }
+-- 
+2.25.1
+

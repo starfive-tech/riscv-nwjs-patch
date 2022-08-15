@@ -1,0 +1,26 @@
+From eb292c4748fd9057c27daa3b4f842c2ef775ebf5 Mon Sep 17 00:00:00 2001
+From: Tien Hock Loh <tienhock.loh@starfivetech.com>
+Date: Thu, 11 Aug 2022 07:29:39 +0000
+Subject: [PATCH 17/51] DEPS: update boringssl to latest HEAD
+
+Signed-off-by: Tien Hock Loh <tienhock.loh@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 338adadd4456..f5c8d440c45d 100644
+--- a/DEPS
++++ b/DEPS
+@@ -277,7 +277,7 @@ vars = {
+   #
+   # Note this revision should be updated with
+   # third_party/boringssl/roll_boringssl.py, not roll-dep.
+-  'boringssl_revision': '4d955d20d27bcf3ae71df091ad17d95229a7eb56',
++  'boringssl_revision': '4566bb5fe517f7f141b5fe935c559fc4311af35d',
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling google-toolbox-for-mac
+   # and whatever else without interference from each other.
+-- 
+2.25.1
+

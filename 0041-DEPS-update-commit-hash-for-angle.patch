@@ -1,0 +1,26 @@
+From 767fa17cbaf6e3d485d85b50521b1ba07bfafd53 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Thu, 4 Aug 2022 12:45:21 +0800
+Subject: [PATCH 41/51] DEPS: update commit hash for angle
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 0a16f35dd321..39762f3a2a48 100644
+--- a/DEPS
++++ b/DEPS
+@@ -263,7 +263,7 @@ vars = {
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling ANGLE
+   # and whatever else without interference from each other.
+-  'angle_revision': 'ed00a14f6501b48d2cf24df1642d49653ddc77ff',
++  'angle_revision': '940607349d6aa37b6057f60944338faf9eaa4c37',
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling SwiftShader
+   # and whatever else without interference from each other.
+-- 
+2.25.1
+

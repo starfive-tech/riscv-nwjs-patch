@@ -1,0 +1,48 @@
+From 258032c9f404c8e8aae8878340ebb4abf76d03df Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Mon, 25 Jul 2022 14:29:11 +0800
+Subject: [PATCH 25/51] build: config: compiler: add build flags for clang
+
+This will resolve build failure on v8 when using clang.
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/compiler/BUILD.gn | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+index 9882b6cb6e1b..ef115d5184c0 100644
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -1523,6 +1523,8 @@ config("default_warnings") {
+       # this as well. http://crbug.com/316352
+       "-Wno-unneeded-internal-declaration",
+       "-Wno-unused-function",
++      "-Wno-invalid-offsetof",
++      "-Wno-range-loop-construct",
+     ]
+ 
+     if (!is_nacl || is_nacl_saigo) {
+@@ -1955,8 +1957,17 @@ config("no_incompatible_pointer_warnings") {
+ # Shared settings for both "optimize" and "optimize_max" configs.
+ # IMPORTANT: On Windows "/O1" and "/O2" must go before the common flags.
+ if (is_win) {
+-  common_optimize_on_cflags = [
+-    "/Ob2",  # Both explicit and auto inlining.
++  common_optimize_on_cflags = []
++  if(is_clang) {
++    common_optimize_on_cflags += [
++      "/Ob2",  # Both explicit and auto inlining.
++    ]
++  } else {
++    common_optimize_on_cflags += [
++      "/Ob3",  # Both explicit and auto inlining.
++    ]
++  }
++  common_optimize_on_cflags += [
+     "/Oy-",  # Disable omitting frame pointers, must be after /O2.
+     "/Zc:inline",  # Remove unreferenced COMDAT (faster links).
+   ]
+-- 
+2.25.1
+
