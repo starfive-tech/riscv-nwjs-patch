@@ -65,10 +65,10 @@ solutions = [
 ]
 ```
 
-4. Checkout to 104.0.5070.0 tag where the patchset are based on.
+4. Checkout to 101.0.4951.67 tag where the patchset are based on.
 ```
 $ cd ~/chromium/src
-$ git checkout 104.0.5070.0
+$ git checkout 101.0.4951.67
 
 ```
 
@@ -85,36 +85,19 @@ $ vim out/riscv64/args.gn
 target_os="linux"
 target_cpu="riscv64"
 
-use_custom_libcxx=false
-use_custom_libcxx_for_host=true
-
 is_component_build = true
 is_debug=false
 symbol_level=0
 v8_symbol_level=0
 blink_symbol_level=0
 
-enable_swiftshader=true
-enable_libaom=true
-
 # Disable broken features
 use_gnome_keyring=false
-enable_nacl=false
-treat_warnings_as_errors=false
-fatal_linker_warnings=false
-enable_dav1d_decoder = false
-enable_reading_list=false
-enable_vr=false
-supports_subzero=false
-enable_openscreen=false
-enable_jxl_decoder=false
 
 # For clang
-is_clang = true
-clang_base_path=getenv("HOME") + "/riscv/_install"
-clang_use_chrome_plugins=false
-use_lld=true
-#use_thin_lto=false
+is_clang=true
+use_lld=false
+use_gold=false
 ```
 
 7. Apply the patches from this repository.
