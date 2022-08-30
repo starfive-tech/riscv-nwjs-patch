@@ -1,0 +1,47 @@
+From b2b7cb0ad63d66fd035ae359a3dd548ab14abfd8 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 22 Jul 2022 11:30:53 +0800
+Subject: [PATCH] gn: add build flags for riscv64
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ gn/standalone/BUILD.gn                                 | 10 ++++++++++
+ .../importers/proto/packet_sequence_state.cc           |  1 +
+ 2 files changed, 11 insertions(+)
+
+diff --git a/gn/standalone/BUILD.gn b/gn/standalone/BUILD.gn
+index bd3311460..ac7134103 100644
+--- a/gn/standalone/BUILD.gn
++++ b/gn/standalone/BUILD.gn
+@@ -243,6 +243,16 @@ config("default") {
+         "-msse4.2",
+       ]
+     }
++  } else if (target_cpu == "riscv64") {
++    cflags += [
++      "-mabi=lp64d",
++      "-mno-relax",
++      "--target=riscv64-linux-gnu",
++    ]
++    ldflags += [
++      "-mno-relax",
++      "--target=riscv64-linux-gnu",
++    ]
+   }
+ 
+   if (is_linux) {
+diff --git a/src/trace_processor/importers/proto/packet_sequence_state.cc b/src/trace_processor/importers/proto/packet_sequence_state.cc
+index 2eb23509c..2bd8cce34 100644
+--- a/src/trace_processor/importers/proto/packet_sequence_state.cc
++++ b/src/trace_processor/importers/proto/packet_sequence_state.cc
+@@ -14,6 +14,7 @@
+  * limitations under the License.
+  */
+ 
++#pragma clang diagnostic ignored "-Wunused-private-field"
+ #include "src/trace_processor/importers/proto/packet_sequence_state.h"
+ 
+ namespace perfetto {
+-- 
+2.30.2
+

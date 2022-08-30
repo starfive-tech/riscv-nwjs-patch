@@ -1,0 +1,40 @@
+From ed00a14f6501b48d2cf24df1642d49653ddc77ff Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Mon, 25 Jul 2022 09:44:05 +0800
+Subject: [PATCH] add riscv64 architecture detection
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ gni/angle.gni         | 2 +-
+ src/common/platform.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gni/angle.gni b/gni/angle.gni
+index 01d260427..7229ec1af 100644
+--- a/gni/angle.gni
++++ b/gni/angle.gni
+@@ -74,7 +74,7 @@ declare_args() {
+ 
+   if (current_cpu == "arm64" || current_cpu == "x64" ||
+       current_cpu == "mips64el" || current_cpu == "s390x" ||
+-      current_cpu == "ppc64") {
++      current_cpu == "ppc64" || current_cpu == "riscv64") {
+     angle_64bit_current_cpu = true
+   } else if (current_cpu == "arm" || current_cpu == "x86" ||
+              current_cpu == "mipsel" || current_cpu == "s390" ||
+diff --git a/src/common/platform.h b/src/common/platform.h
+index c39c7e040..0e35bbdea 100644
+--- a/src/common/platform.h
++++ b/src/common/platform.h
+@@ -102,7 +102,7 @@
+ #endif
+ 
+ // Mips and arm devices need to include stddef for size_t.
+-#if defined(__mips__) || defined(__arm__) || defined(__aarch64__)
++#if defined(__mips__) || defined(__arm__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64)
+ #    include <stddef.h>
+ #endif
+ 
+-- 
+2.30.2
+

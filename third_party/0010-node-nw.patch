@@ -1,0 +1,74 @@
+From 2503c55629a98c32b380872cdd7f86637524b381 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 22 Jun 2022 08:18:27 +0000
+Subject: [PATCH 1/2] add build flags for riscv64
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ common.gypi | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/common.gypi b/common.gypi
+index 0f9f818f16..bdc7ce0701 100644
+--- a/common.gypi
++++ b/common.gypi
+@@ -121,7 +121,7 @@
+         'obj_dir%': '<(PRODUCT_DIR)/obj.target',
+         #'v8_base': '<(PRODUCT_DIR)/obj.target/tools/v8_gypfiles/libv8_snapshot.a',
+       }],
+-      ['target_arch=="x64" or target_arch=="arm64"', {
++      ['target_arch=="x64" or target_arch=="arm64" or target_arch=="riscv64"', {
+         'v8_enable_pointer_compression': 1,
+         'v8_enable_31bit_smis_on_64bit_arch': 1,
+       }],
+@@ -134,6 +134,9 @@
+       ['OS=="linux" and target_arch=="arm" and <(building_nw)==1', {
+         'sysroot': '<!(cd <(DEPTH) && pwd -P)/build/linux/debian_sid_arm-sysroot',
+       }],
++      ['OS=="linux" and target_arch=="riscv64" and <(building_nw)==1', {
++        'sysroot': '<!(cd <(DEPTH) && pwd -P)/build/linux/debian_sid_riscv64-sysroot',
++      }],
+       ['OS=="mac"', {
+         'clang%': 1,
+         'obj_dir%': '<(PRODUCT_DIR)/obj.target',
+@@ -637,6 +640,10 @@
+             'cflags!': [ '-pthread' ],
+             'ldflags!': [ '-pthread' ],
+           }],
++          [ 'target_arch=="riscv64", {
++            'cflags': [ '-m64', '--target=riscv64-linux-gnu', '-mno-relax', '-mabi=lp64d' ],
++            'ldflags': [ '--target=riscv64-linux-gnu', '-mno-relax' ],
++          }],
+           [ 'node_shared=="true"', {
+             'cflags': [ '-fPIC' ],
+           }],
+-- 
+2.30.2
+
+
+From 7542bf436d2425361f1febe93fbffb3330c88fce Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 26 Jul 2022 08:47:16 +0800
+Subject: [PATCH 2/2] common.gypi: fix syntax
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ common.gypi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/common.gypi b/common.gypi
+index bdc7ce0701..291988df9b 100644
+--- a/common.gypi
++++ b/common.gypi
+@@ -640,7 +640,7 @@
+             'cflags!': [ '-pthread' ],
+             'ldflags!': [ '-pthread' ],
+           }],
+-          [ 'target_arch=="riscv64", {
++          [ 'target_arch=="riscv64"', {
+             'cflags': [ '-m64', '--target=riscv64-linux-gnu', '-mno-relax', '-mabi=lp64d' ],
+             'ldflags': [ '--target=riscv64-linux-gnu', '-mno-relax' ],
+           }],
+-- 
+2.30.2
+

@@ -1,0 +1,26 @@
+From 6baaa9b2a4298e7c71555a69aee72a5c63961c2b Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 22 Jul 2022 18:12:20 +0800
+Subject: [PATCH] common: Platform.h: add riscv64 architecture detection
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ src/dawn/common/Platform.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/dawn/common/Platform.h b/src/dawn/common/Platform.h
+index f9471021..cde97427 100644
+--- a/src/dawn/common/Platform.h
++++ b/src/dawn/common/Platform.h
+@@ -68,7 +68,7 @@
+ #endif
+ 
+ #if defined(_WIN64) || defined(__aarch64__) || defined(__x86_64__) || defined(__mips64__) || \
+-    defined(__s390x__) || defined(__PPC64__)
++    defined(__s390x__) || defined(__PPC64__) || (defined(__riscv) && __riscv_xlen == 64)
+ #    define DAWN_PLATFORM_64_BIT 1
+ static_assert(sizeof(sizeof(char)) == 8, "Expect sizeof(size_t) == 8");
+ #elif defined(_WIN32) || defined(__arm__) || defined(__i386__) || defined(__mips32__) || \
+-- 
+2.30.2
+

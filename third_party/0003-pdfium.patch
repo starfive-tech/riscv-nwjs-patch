@@ -1,0 +1,26 @@
+From 460f12789136fd73f28f82be25ba8887d5a3ed2b Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 22 Jul 2022 10:04:49 +0800
+Subject: [PATCH] base: partition_allocator: add asm instruction sfor riscv64
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ third_party/base/allocator/partition_allocator/spin_lock.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/third_party/base/allocator/partition_allocator/spin_lock.cc b/third_party/base/allocator/partition_allocator/spin_lock.cc
+index d7cdd15e2..ab9182608 100644
+--- a/third_party/base/allocator/partition_allocator/spin_lock.cc
++++ b/third_party/base/allocator/partition_allocator/spin_lock.cc
+@@ -45,6 +45,8 @@
+ #define YIELD_PROCESSOR __asm__ __volatile__("pause")
+ #elif defined(ARCH_CPU_PPC64_FAMILY)
+ #define YIELD_PROCESSOR __asm__ __volatile__("or 31,31,31")
++#elif defined(ARCH_CPU_RISCV_FAMILY)
++#define YIELD_PROCESSOR __asm__ __volatile__("FENCE")
+ #elif defined(ARCH_CPU_S390_FAMILY)
+ // just do nothing
+ #define YIELD_PROCESSOR ((void)0)
+-- 
+2.30.2
+
