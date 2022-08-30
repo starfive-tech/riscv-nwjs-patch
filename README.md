@@ -29,9 +29,9 @@ gclient sync --with_branch_heads
 
 4. Unpack the sysroot tarball into a specific folder path.
 ```
-mkdir -p build/linux/debian_sid_riscv64-sysroot
-pushd build/linux/debian_sid_riscv64-sysroot
-tar xf $HOME/riscv-chromium-patch/debian_sid_riscv64-sysroot/debian_starfive_chroot.tar.gz --strip-components=1
+pushd build/linux
+unxz $HOME/riscv-chromium-patch/debian_sid_riscv64-sysroot/debian_starfive_chroot.tar.xz
+tar xf $HOME/riscv-chromium-patch/debian_sid_riscv64-sysroot/debian_starfive_chroot.tar
 popd
 ```
 
