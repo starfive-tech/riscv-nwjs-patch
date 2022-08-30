@@ -1,135 +1,71 @@
-# Chromium Development / Porting for RISC-V
+# NW.js Development / Porting for RISC-V
 
 ## Build host
 
 Ubuntu 20.04.4 LTS
+Debian 11
 
 
-## llvm / clang
+## Get the code
 
-1. Build a cross-compile toolchain for llvm and clang.
+1. Setup depot_tools.
 ```
-$ sudo apt-get -y install binutils build-essential libtool \
-  texinfo gzip zip unzip patchutils curl git make cmake \
-  ninja-build automake bison flex gperf grep sed gawk \
-  python bc zlib1g-dev libexpat1-dev libmpc-dev \
-  libglib2.0-dev libfdt-dev libpixman-1-dev 
-$ mkdir ~/riscv
-$ cd ~/riscv
-$ mkdir _install
-$ export PATH=`pwd`/_install/bin:$PATH
-$ hash -r
-# gcc, binutils, newlib, qemu
-$ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
-$ pushd riscv-gnu-toolchain
-$ ./configure --prefix=`pwd`/../_install --enable-multilib
-$ make -j`nproc` linux
-$ make -j`nproc` build-qemu
-$ popd
-# llvm
-$ git clone https://github.com/llvm/llvm-project.git riscv-llvm
-$ pushd riscv-llvm
-$ ln -s ../../clang llvm/tools || true
-$ mkdir _build
-$ cd _build
-$ cmake -G Ninja -DCMAKE_BUILD_TYPE="Release" \
-  -DBUILD_SHARED_LIBS=True -DLLVM_USE_SPLIT_DWARF=True \
-  -DCMAKE_INSTALL_PREFIX="../../_install" \
-  -DLLVM_OPTIMIZED_TABLEGEN=True -DLLVM_BUILD_TESTS=False \
-  -DDEFAULT_SYSROOT="../../_install/riscv64-unknown-linux-gnu" \
-  -DLLVM_DEFAULT_TARGET_TRIPLE="riscv64-unknown-linux-gnu" \
-  -DLLVM_TARGETS_TO_BUILD="RISCV" \
-  ../llvm
-$ cmake --build . --target install
-$ popd
+cd $HOME
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+export PATH=$PATH:${HOME}/depot_tools
 ```
 
-
-## Chromium
-
-1. Follow the Chromium official build instruction for Linux host to get the source code.
-https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/linux/build_instructions.md
-
-2. Install additional build dependencies (by using the script available within the source code.)
-
-3. Edit the .gclient file in //chromium top level. This is to disable gclient from syncing NaCL code base.
+2. Download a custom .gclient file for NW.js build.
 ```
-solutions = [
-  {
-    "name": "src",
-    "url": "https://chromium.googlesource.com/chromium/src.git",
-    "managed": False,
-    "custom_deps": {},
-    "custom_vars": { "checkout_nacl": False },
-  },
-]
+mkdir nwjs && cd nwjs
+wget https://raw.githubusercontent.com/rebeccasf/nwjs.config/master/gclient -O .gclient
 ```
 
-4. Checkout to 101.0.4951.67 tag where the patchset are based on.
+3. Sync all source code.
 ```
-$ cd ~/chromium/src
-$ git checkout 101.0.4951.67
-
-```
-
-5. Run the Chromium-specific hooks, this will download additional toolchain / binaries that we might need for the build later.
-```
-$ cd ~/chromium/src
-$ gclient runhooks
+cd src
+gclient sync --with_branch_heads
 ```
 
-6. Set up the build configurations in args.gn
+4. Unpack the sysroot tarball into a specific folder path.
 ```
-$ mkdir -p out/riscv64
-$ vim out/riscv64/args.gn
-target_os="linux"
-target_cpu="riscv64"
-
-is_component_build = true
-is_debug=false
-symbol_level=0
-v8_symbol_level=0
-blink_symbol_level=0
-
-# Disable broken features
-use_gnome_keyring=false
-
-# For clang
-is_clang=true
-use_lld=false
-use_gold=false
+mkdir -p build/linux/debian_sid_riscv64-sysroot
+pushd build/linux/debian_sid_riscv64-sysroot
+tar xf $HOME/riscv-chromium-patch/debian_sid_riscv64-sysroot/debian_starfive_chroot.tar.gz --strip-components=1
+popd
 ```
 
-7. Apply the patches from this repository.
+5. Run GN.
 ```
-$ cd ~/chromium/src
-$ git am <patch>
-```
-
-8. Apply the patches in the untracked folder. This is due to third_party components are not tracked under the same git history.
-
-NOTE: There is no script to help in this yet. So we have to run patch command manually in the respective folders.
-
-TODO: Add a script to help user to patch these patches for third_party components.
-```
-$ cd third_party/<component>
-$ patch -p1 < ~/riscv64-chromium-patch/third_party/XXX.patch
+gn gen out/nw --args='target_cpu="riscv64" target_os="linux" is_debug=false is_component_ffmpeg=true symbol_level=1 blink_symbol_level=0 use_gnome_keyring=false is_clang=true use_lld=false use_gold=false'
 ```
 
-9. Setup ffmpeg.
+6. Build the llvm/clang for RISCV.
 ```
-$ cd third_party/ffmpeg
-$ ./chromium/scripts/build_ffmpeg.py linux riscv64
-$ ./chromium/scripts/generate_gn.py
-$ ./chromium/scripts/copy_config.sh
-```
-
-10. Run the build and start resolving build issues.
-```
-$ autoninja -C out/riscv64 chrome
+pushd tools/clang/scripts
+./build.py --without-android --without-fuchsia
+popd
 ```
 
-## Debugging
+7. Configure for NW.js.
+```
+export GYP_DEFINES="target_arch=riscv64"
+GYP_CHROMIUM_NO_ACTION=0 ./build/gyp_chromium -I third_party/node-nw/common.gypi -D building_nw=1 -D clang=1 third_party/node-nw/node.gyp
+```
+
+8. Start ninja-build.
+```
+ninja -C out/nw nwjs -j128 -k0
+```
+
+9. Build libnode for NW.js.
+```
+ninja -C out/Release node -k0
+ninja -C out/nw copy_node
+```
+
+
+## Misc
 
 1. Generate dependency tree from GN.
 ```
