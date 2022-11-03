@@ -1,0 +1,27 @@
+From 3ca020ed06dde55d8f6677c41428e0537d8695fe Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 02:49:14 -0400
+Subject: [PATCH 18/68] tools: clang: scripts: add RISCV default target triple
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ tools/clang/scripts/build.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tools/clang/scripts/build.py b/tools/clang/scripts/build.py
+index e038871d086b..24318a7a0f55 100755
+--- a/tools/clang/scripts/build.py
++++ b/tools/clang/scripts/build.py
+@@ -987,6 +987,9 @@ def main():
+     if platform.machine() == 'aarch64':
+       cmake_args.append(
+           '-DLLVM_DEFAULT_TARGET_TRIPLE=aarch64-unknown-linux-gnu')
++    elif platform.machine() == 'riscv64':
++      cmake_args.append(
++          '-DLLVM_DEFAULT_TARGET_TRIPLE=riscv64-unknown-linux-gnu')
+     else:
+       cmake_args.append('-DLLVM_DEFAULT_TARGET_TRIPLE=x86_64-unknown-linux-gnu')
+     cmake_args.append('-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=ON')
+-- 
+2.30.2
+

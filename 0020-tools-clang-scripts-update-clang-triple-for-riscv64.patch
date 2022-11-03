@@ -1,0 +1,26 @@
+From 46c0a2671c2638d9fd98ed2182d56394f3406e4a Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 3 Aug 2022 08:32:42 +0000
+Subject: [PATCH 20/68] tools: clang: scripts: update clang triple for riscv64
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ tools/clang/scripts/build.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/clang/scripts/build.py b/tools/clang/scripts/build.py
+index cba050829f3d..bde98539bbff 100755
+--- a/tools/clang/scripts/build.py
++++ b/tools/clang/scripts/build.py
+@@ -991,7 +991,7 @@ def main():
+           '-DLLVM_DEFAULT_TARGET_TRIPLE=aarch64-unknown-linux-gnu')
+     elif platform.machine() == 'riscv64':
+       cmake_args.append(
+-          '-DLLVM_DEFAULT_TARGET_TRIPLE=riscv64-unknown-linux-gnu')
++          '-DLLVM_DEFAULT_TARGET_TRIPLE=riscv64-linux-gnu')
+     else:
+       cmake_args.append('-DLLVM_DEFAULT_TARGET_TRIPLE=x86_64-unknown-linux-gnu')
+     cmake_args.append('-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=ON')
+-- 
+2.30.2
+

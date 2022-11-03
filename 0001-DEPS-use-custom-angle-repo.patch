@@ -1,0 +1,43 @@
+From 89c0bb54756f08267f6a610052fba49ceffb34cf Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Mon, 5 Sep 2022 23:26:46 -0400
+Subject: [PATCH 01/68] DEPS: use custom angle repo
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/DEPS b/DEPS
+index 965dfffb0579..1b22eac9e425 100644
+--- a/DEPS
++++ b/DEPS
+@@ -248,6 +248,7 @@ vars = {
+   'nwjs_git': 'https://github.com/nwjs',
+   'pdfium_git': 'https://pdfium.googlesource.com',
+   'quiche_git': 'https://quiche.googlesource.com',
++  'reb_git' : 'https://github.com/rebeccasf',
+   'skia_git': 'https://skia.googlesource.com',
+   'swiftshader_git': 'https://swiftshader.googlesource.com',
+   'webrtc_git': 'https://webrtc.googlesource.com',
+@@ -262,7 +263,7 @@ vars = {
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling ANGLE
+   # and whatever else without interference from each other.
+-  'angle_revision': '9768648fffc94a434a7d400a2542ce3706224417',
++  'angle_revision': '6fb80b7687be3e496cadd2ac1dddad2261c95038',
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling SwiftShader
+   # and whatever else without interference from each other.
+@@ -1004,7 +1005,7 @@ deps = {
+   },
+ 
+   'src/third_party/angle':
+-    Var('chromium_git') + '/angle/angle.git' + '@' +  Var('angle_revision'),
++    Var('reb_git') + '/angle.git' + '@' +  Var('angle_revision'),
+ 
+   'src/third_party/dav1d/libdav1d':
+     Var('chromium_git') + '/external/github.com/videolan/dav1d.git' + '@' + '87f9a81cd770e49394a45deca7a3df41243de00b',
+-- 
+2.30.2
+

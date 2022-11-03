@@ -1,0 +1,26 @@
+From 036ab0503d999edba3e43f3641296c23ca0f8b7d Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 20 Jul 2022 00:56:29 +0000
+Subject: [PATCH 37/68] third_party: pffft: add riscv64 arch detection
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ third_party/pffft/BUILD.gn | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/pffft/BUILD.gn b/third_party/pffft/BUILD.gn
+index 0a1cf7a1f5e1..322c00dbd2da 100644
+--- a/third_party/pffft/BUILD.gn
++++ b/third_party/pffft/BUILD.gn
+@@ -19,7 +19,7 @@ config("common_config") {
+   # PFFFT doesn't support SIMD on some cpus, so build a scalar version.
+   if ((current_cpu == "arm" && !arm_use_neon) || current_cpu == "mipsel" ||
+       current_cpu == "mips64el" || current_cpu == "ppc64" ||
+-      current_cpu == "s390x") {
++      current_cpu == "riscv64" || current_cpu == "s390x") {
+     defines = [ "PFFFT_SIMD_DISABLE" ]
+   }
+ }
+-- 
+2.30.2
+

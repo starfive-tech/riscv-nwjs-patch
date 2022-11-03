@@ -1,0 +1,26 @@
+From 764cad7f02760636c09425cf1c4a705186c535d3 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 22 Jun 2022 08:04:54 +0000
+Subject: [PATCH 39/68] add workaround to avoid rebuild sysroot
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/posix/BUILD.gn | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/config/posix/BUILD.gn b/build/config/posix/BUILD.gn
+index 5d1516387571..78fb9aa2e5c0 100644
+--- a/build/config/posix/BUILD.gn
++++ b/build/config/posix/BUILD.gn
+@@ -28,7 +28,7 @@ config("runtime_library") {
+   if (!is_apple && sysroot != "" && current_os != "zos") {
+     # Pass the sysroot to all C compiler variants, the assembler, and linker.
+     sysroot_flags = [ "--sysroot=" + rebase_path(sysroot, root_build_dir) ]
+-    if (is_linux || is_chromeos) {
++    if (is_chromeos) {
+       # This is here so that all files get recompiled after a sysroot roll and
+       # when turning the sysroot on or off. (defines are passed via the command
+       # line, and build system rebuilds things when their commandline
+-- 
+2.30.2
+

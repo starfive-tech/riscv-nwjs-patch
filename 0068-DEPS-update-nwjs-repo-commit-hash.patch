@@ -1,0 +1,26 @@
+From c2cae4e04f525423fa1e6ea1cdb308d00aac7095 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 2 Nov 2022 22:30:39 -0400
+Subject: [PATCH 68/68] DEPS: update nwjs repo commit hash
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 94cb771bfb37..f6280f3fae1c 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1809,7 +1809,7 @@ deps = {
+     Var('reb_git') + '/node.git' + '@' + '209c5d803d13fb9be560e5d80ff1f58e0ad3e142',
+ 
+   'src/content/nw':
+-    Var('reb_git') + '/nw.js.git' + '@' + '52deb9b9ed6d4209220ab47975455b73e655b465',
++    Var('reb_git') + '/nw.js.git' + '@' + '4ceb6d072dcfb8b1dfcd6720ec7559e182757de9',
+ 
+   'src-internal': {
+     'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@d63d68d7ecdd892e8428f0b76c7f107a665e575e',
+-- 
+2.30.2
+

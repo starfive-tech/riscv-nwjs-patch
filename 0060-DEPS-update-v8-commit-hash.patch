@@ -1,0 +1,26 @@
+From 00dab49cff583445b0f18e6ff44e981d22ce4444 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 7 Sep 2022 21:29:40 -0400
+Subject: [PATCH 60/68] DEPS: update v8 commit hash
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 005e3ee4bc99..a75226fbcfb3 100644
+--- a/DEPS
++++ b/DEPS
+@@ -259,7 +259,7 @@ vars = {
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling V8
+   # and whatever else without interference from each other.
+-  'v8_revision': '4b713c7340503c8d7e0c7652a1495db929a0fe38',
++  'v8_revision': '4a5801e85e5d68f97fc8868d7aebb8601fabd1b2',
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling ANGLE
+   # and whatever else without interference from each other.
+-- 
+2.30.2
+

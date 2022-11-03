@@ -1,7 +1,7 @@
-From 1e5a4cb190d7569be8bf075cc4350b748e647fca Mon Sep 17 00:00:00 2001
+From bc410d7f6d3d6e55db8162d7360e93f3e3ccf6f3 Mon Sep 17 00:00:00 2001
 From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 Date: Mon, 15 Aug 2022 10:05:09 +0800
-Subject: [PATCH 50/51] build: config: compiler: add march for riscv64
+Subject: [PATCH 50/68] build: config: compiler: add march for riscv64
 
 Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
-index c2fce9eb8ede..2275a63517df 100644
+index 9912e77e1d00..4309b0d4e812 100644
 --- a/build/config/compiler/BUILD.gn
 +++ b/build/config/compiler/BUILD.gn
-@@ -1183,6 +1183,7 @@ config("compiler_cpu_abi") {
+@@ -1170,6 +1170,7 @@ config("compiler_cpu_abi") {
        }
      } else if (current_cpu == "riscv64") {
        cflags += [
@@ -21,5 +21,5 @@ index c2fce9eb8ede..2275a63517df 100644
          "--target=riscv64-linux-gnu",
          "-mno-relax",
 -- 
-2.25.1
+2.30.2
 

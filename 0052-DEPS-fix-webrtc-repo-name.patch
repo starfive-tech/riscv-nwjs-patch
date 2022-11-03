@@ -1,0 +1,26 @@
+From 6dd2bdadd6e9fc987cc49ebaad469ab5aae0e0bd Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 03:57:38 -0400
+Subject: [PATCH 52/68] DEPS: fix webrtc repo name
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index b3496d135579..92a3f3722582 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1736,7 +1736,7 @@ deps = {
+     Var('chromium_git') + '/external/github.com/gpuweb/cts.git' + '@' + '958d732db02c2a70bcf4a2b0986f09318db4adfb',
+ 
+   'src/third_party/webrtc':
+-    Var('reb_git') + '/src.git' + '@' + 'c684f18ebe97ea76aa2c8823138982df070de782',
++    Var('reb_git') + '/webrtc.git' + '@' + 'c684f18ebe97ea76aa2c8823138982df070de782',
+ 
+   'src/third_party/libgifcodec':
+      Var('skia_git') + '/libgifcodec' + '@'+  Var('libgifcodec_revision'),
+-- 
+2.30.2
+

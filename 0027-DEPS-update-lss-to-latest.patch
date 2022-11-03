@@ -1,0 +1,26 @@
+From 45a4f6a3369d575ff7a3238632bd233c03b3e888 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 20 Jul 2022 06:20:23 +0000
+Subject: [PATCH 27/68] DEPS: update lss to latest
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 2d4e110038d3..b3496d135579 100644
+--- a/DEPS
++++ b/DEPS
+@@ -294,7 +294,7 @@ vars = {
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling lss
+   # and whatever else without interference from each other.
+-  'lss_revision': '92a65a8f5d705d1928874420c8d0d15bde8c89e5',
++  'lss_revision': '3bb68597959611490cd8c1c127564aedef1da27a',
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling NaCl
+   # and whatever else without interference from each other.
+-- 
+2.30.2
+

@@ -1,0 +1,45 @@
+From 022405de1e77f2a76875e411aa3880c945e6d7ac Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 22 Jun 2022 07:56:35 +0000
+Subject: [PATCH 29/68] build: config: compiler: set generic riscv64 flags
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/compiler/BUILD.gn | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+index e2eadac1dafb..014bc5152e10 100644
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -1168,6 +1168,17 @@ config("compiler_cpu_abi") {
+         cflags += [ "-m64" ]
+         ldflags += [ "-m64" ]
+       }
++    } else if (current_cpu == "riscv64") {
++      cflags += [
++        "-m64",
++        "--target=riscv64-linux-gnu",
++        "-mno-relax",
++        "-mabi=lp64d",
++      ]
++      ldflags += [
++        "--target=riscv64-linux-gnu",
++        "-mno-relax",
++      ]
+     } else if (current_cpu == "s390x") {
+       cflags += [ "-m64" ]
+       ldflags += [ "-m64" ]
+@@ -1646,7 +1657,8 @@ config("chromium_code") {
+ 
+     if (!is_debug && !using_sanitizer && current_cpu != "s390x" &&
+         current_cpu != "s390" && current_cpu != "ppc64" &&
+-        current_cpu != "mips" && current_cpu != "mips64") {
++        current_cpu != "mips" && current_cpu != "mips64" &&
++        current_cpu != "riscv64") {
+       # Non-chromium code is not guaranteed to compile cleanly with
+       # _FORTIFY_SOURCE. Also, fortified build may fail when optimizations are
+       # disabled, so only do that for Release build.
+-- 
+2.30.2
+

@@ -1,0 +1,25 @@
+From 1133aceb0c4cffe4f867f754176fa4bd847965f5 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 03:26:12 -0400
+Subject: [PATCH 38/68] BUILD.gn: disable chromedriver_unittests
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ BUILD.gn | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/BUILD.gn b/BUILD.gn
+index f337d1a01a9f..6d9fd624b176 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -1046,7 +1046,6 @@ if (!is_ios) {
+     } else {
+       deps = [
+         "//chrome/test/chromedriver:chromedriver",
+-        "//chrome/test/chromedriver:chromedriver_unittests",
+       ]
+     }
+   }
+-- 
+2.30.2
+

@@ -1,0 +1,25 @@
+From bdd9357ced34220b853caaefe3b3d542816fad5a Mon Sep 17 00:00:00 2001
+From: Tien Hock Loh <tienhock.loh@starfivetech.com>
+Date: Fri, 5 Aug 2022 03:06:18 -0400
+Subject: [PATCH 35/68] build: config: compiler: skip warning for ffmpeg
+
+Signed-off-by: Tien Hock Loh <tienhock.loh@starfivetech.com>
+---
+ build/config/compiler/BUILD.gn | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+index ff848427895d..9912e77e1d00 100644
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -1919,6 +1919,7 @@ config("wglobal_constructors") {
+ config("wexit_time_destructors") {
+   if (is_clang) {
+     cflags = [ "-Wexit-time-destructors" ]
++    cflags += [ "-Wno-deprecated-declarations" ]
+   }
+ }
+ 
+-- 
+2.30.2
+

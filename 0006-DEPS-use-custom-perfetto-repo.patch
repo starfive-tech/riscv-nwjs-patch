@@ -1,0 +1,26 @@
+From 893f7849df2703b91366f1aa3b3a035bcb868541 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 02:23:07 -0400
+Subject: [PATCH 06/68] DEPS: use custom perfetto repo
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 3556ef896cb5..02f64e0d65b8 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1509,7 +1509,7 @@ deps = {
+   },
+ 
+   'src/third_party/perfetto':
+-    Var('android_git') + '/platform/external/perfetto.git' + '@' + '4c15672c0a9e16ac762aa5148f1264350fd49b98',
++    Var('reb_git') + '/perfetto.git' + '@' + '219b04a9984274e822d7ba979ec7940e6852a221',
+ 
+   'src/third_party/perl': {
+       'url': Var('chromium_git') + '/chromium/deps/perl.git' + '@' + '6f3e5028eb65d0b4c5fdd792106ac4c84eee1eb3',
+-- 
+2.30.2
+

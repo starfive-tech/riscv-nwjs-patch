@@ -1,0 +1,68 @@
+From a1fa023c9a7318c1b0f9128b21f7572e2141182c Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Mon, 18 Jul 2022 01:19:03 +0000
+Subject: [PATCH 47/68] content: shell: remove dependency to breakpad
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ content/shell/BUILD.gn | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/content/shell/BUILD.gn b/content/shell/BUILD.gn
+index e8c956adf334..1dbe9867b483 100644
+--- a/content/shell/BUILD.gn
++++ b/content/shell/BUILD.gn
+@@ -652,7 +652,6 @@ if (is_mac) {
+     testonly = true
+     info_plist = "app/framework-Info.plist"
+     args = [
+-      "--breakpad=0",
+       "--keystone=0",
+       "--scm=1",
+       "--version",
+@@ -726,7 +725,6 @@ if (is_mac) {
+     testonly = true
+     info_plist = "app/helper-Info.plist"
+     args = [
+-      "--breakpad=0",
+       "--keystone=0",
+       "--scm=0",
+       "--version",
+@@ -857,7 +855,6 @@ group("content_shell_crash_test") {
+     "//third_party/mesa_headers",
+   ]
+   data = [
+-    "//content/shell/tools/breakpad_integration_test.py",
+     "//testing/scripts/content_shell_crash_test.py",
+   ]
+   if (is_mac && !use_system_xcode) {
+@@ -873,26 +870,16 @@ group("content_shell_crash_test") {
+   }
+   if (is_posix) {
+     data += [
+-      "//components/crash/content/tools/generate_breakpad_symbols.py",
+       "//components/crash/content/tools/dmp2minidump.py",
+     ]
+   }
+   if (is_win) {
+     data_deps += [ "//build/win:copy_cdb_to_output" ]
+   }
+-  if (is_posix) {
+-    data_deps += [
+-      "//third_party/breakpad:dump_syms",
+-      "//third_party/breakpad:minidump_stackwalk",
+-    ]
+-  }
+   if (is_android) {
+     data_deps += [
+       "//build/android:devil_chromium_py",
+       "//build/android:test_runner_py",
+-      "//third_party/breakpad:microdump_stackwalk",
+-      "//third_party/breakpad:minidump_dump",
+-      "//third_party/breakpad:symupload",
+       "//tools/android/forwarder2",
+     ]
+   }
+-- 
+2.30.2
+

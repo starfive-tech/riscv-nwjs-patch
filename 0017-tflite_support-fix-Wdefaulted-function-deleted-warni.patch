@@ -1,0 +1,27 @@
+From 4c33dc502337c034101ef554284964f1fe6f3174 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Thu, 4 Aug 2022 08:31:48 +0800
+Subject: [PATCH 17/68] tflite_support: fix -Wdefaulted-function-deleted
+ warning
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ .../src/tensorflow_lite_support/cc/task/processor/processor.h   | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/tflite_support/src/tensorflow_lite_support/cc/task/processor/processor.h b/third_party/tflite_support/src/tensorflow_lite_support/cc/task/processor/processor.h
+index b3c43605ac82..219239f6c2bd 100644
+--- a/third_party/tflite_support/src/tensorflow_lite_support/cc/task/processor/processor.h
++++ b/third_party/tflite_support/src/tensorflow_lite_support/cc/task/processor/processor.h
+@@ -34,7 +34,7 @@ namespace processor {
+ // Shares the common logics to handle tflite_engine and metadata.
+ class Processor {
+  public:
+-  Processor() = default;
++  // Processor() = default;
+   virtual ~Processor() = default;
+ 
+   // Processor is neither copyable nor movable.
+-- 
+2.30.2
+

@@ -1,0 +1,36 @@
+From 5fd078486b29f19686fc9f4ae4e592ba81f4fc00 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 03:42:38 -0400
+Subject: [PATCH 40/68] add path to riscv64 sysroot
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ build/config/sysroot.gni | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/build/config/sysroot.gni b/build/config/sysroot.gni
+index cbcf0a3f0961..aaf1b21baf5f 100644
+--- a/build/config/sysroot.gni
++++ b/build/config/sysroot.gni
+@@ -23,7 +23,8 @@ declare_args() {
+   # is empty, default sysroot is calculated.
+   use_sysroot = current_cpu == "x86" || current_cpu == "x64" ||
+                 current_cpu == "arm" || current_cpu == "arm64" ||
+-                current_cpu == "mipsel" || current_cpu == "mips64el"
++                current_cpu == "mipsel" || current_cpu == "mips64el" ||
++                current_cpu == "riscv64"
+ }
+ 
+ if (sysroot == "") {
+@@ -50,6 +51,8 @@ if (sysroot == "") {
+       sysroot = "$target_sysroot_dir/debian_bullseye_arm-sysroot"
+     } else if (current_cpu == "arm64") {
+       sysroot = "$target_sysroot_dir/debian_bullseye_arm64-sysroot"
++    } else if (current_cpu == "riscv64") {
++      sysroot = "$target_sysroot_dir/debian_sid_riscv64-sysroot"
+     } else {
+       assert(false, "No linux sysroot for cpu: $target_cpu")
+     }
+-- 
+2.30.2
+

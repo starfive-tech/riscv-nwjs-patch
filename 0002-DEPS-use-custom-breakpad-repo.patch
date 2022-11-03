@@ -1,0 +1,26 @@
+From 6e2dfd06391faac6cd68bedd73e2ddf59aabb747 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 00:43:48 -0400
+Subject: [PATCH 02/68] DEPS: use custom breakpad repo
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 1b22eac9e425..238a95689eb2 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1052,7 +1052,7 @@ deps = {
+   },
+ 
+   'src/third_party/breakpad/breakpad':
+-    Var('chromium_git') + '/breakpad/breakpad.git' + '@' + '8b68c72a3fff2bb687c7f411e5c1c09e356b8603',
++    Var('reb_git') + '/breakpad.git' + '@' + 'a1bea36d3a8cbdffa0632a8f67ad02fd3928eec2',
+ 
+   'src/third_party/byte_buddy': {
+       'packages': [
+-- 
+2.30.2
+

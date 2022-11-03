@@ -1,0 +1,35 @@
+From c5842bda77bdae3631c59fa1515bf635645e0580 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 02:25:00 -0400
+Subject: [PATCH 07/68] DEPS: use custom pdfium repo
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/DEPS b/DEPS
+index 02f64e0d65b8..803b2866857d 100644
+--- a/DEPS
++++ b/DEPS
+@@ -271,7 +271,7 @@ vars = {
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling PDFium
+   # and whatever else without interference from each other.
+-  'pdfium_revision': '62ad9af8a9f9494645b659674b64bb51775cde05',
++  'pdfium_revision': '5e6f6020bcf170fbdd68588a31176bde205be12a',
+   # Three lines of non-changing comments so that
+   # the commit queue can handle CLs rolling BoringSSL
+   # and whatever else without interference from each other.
+@@ -1500,7 +1500,7 @@ deps = {
+   },
+ 
+   'src/third_party/pdfium':
+-    Var('pdfium_git') + '/pdfium.git' + '@' +  Var('pdfium_revision'),
++    Var('reb_git') + '/pdfium.git' + '@' +  Var('pdfium_revision'),
+ 
+   # Parses Windows PE/COFF executable format.
+   'src/third_party/pefile': {
+-- 
+2.30.2
+

@@ -1,0 +1,26 @@
+From 5456e383e077348a326378b6d89c1aefa119b402 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Fri, 30 Sep 2022 01:37:02 -0400
+Subject: [PATCH 66/68] DEPS: resolve libnode release mode issue
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 57c94e6860f0..94cb771bfb37 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1806,7 +1806,7 @@ deps = {
+     Var('reb_git') + '/v8.git' + '@' +  Var('v8_revision'),
+ 
+   'src/third_party/node-nw':
+-    Var('reb_git') + '/node.git' + '@' + '90bf0eb747f70320e78a30907e86f34c1c061bc6',
++    Var('reb_git') + '/node.git' + '@' + '209c5d803d13fb9be560e5d80ff1f58e0ad3e142',
+ 
+   'src/content/nw':
+     Var('reb_git') + '/nw.js.git' + '@' + '52deb9b9ed6d4209220ab47975455b73e655b465',
+-- 
+2.30.2
+

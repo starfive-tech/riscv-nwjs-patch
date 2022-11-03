@@ -1,0 +1,27 @@
+From 4cb647a813562a95a1e0a045adf4061ef2e69cf2 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 01:07:35 -0400
+Subject: [PATCH 03/68] DEPS: use custom node-nw repo
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/DEPS b/DEPS
+index 238a95689eb2..a93dcf83a125 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1805,6 +1805,9 @@ deps = {
+   #'src/v8':
+   #  Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
+ 
++  'src/third_party/node-nw':
++    Var('reb_git') + '/node.git' + '@' + '7c46b745ea0ac6cfdac0da84c2e9492c176f8948',
++
+   'src-internal': {
+     'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@d63d68d7ecdd892e8428f0b76c7f107a665e575e',
+     'condition': 'checkout_src_internal',
+-- 
+2.30.2
+

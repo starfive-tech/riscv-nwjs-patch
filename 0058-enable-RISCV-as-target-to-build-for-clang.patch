@@ -1,0 +1,26 @@
+From d71bd1e0f03779fec82794911326233ae459b42f Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 21:26:54 -0400
+Subject: [PATCH 58/68] enable RISCV as target to build for clang
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ tools/clang/scripts/build.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/clang/scripts/build.py b/tools/clang/scripts/build.py
+index bde98539bbff..b4eee2b62c92 100755
+--- a/tools/clang/scripts/build.py
++++ b/tools/clang/scripts/build.py
+@@ -620,7 +620,7 @@ def main():
+   cxxflags = []
+   ldflags = []
+ 
+-  targets = 'AArch64;ARM;Mips;PowerPC;SystemZ;WebAssembly;X86'
++  targets = 'AArch64;ARM;Mips;PowerPC;RISCV;SystemZ;WebAssembly;X86'
+ 
+   projects = 'clang;compiler-rt;lld;clang-tools-extra'
+ 
+-- 
+2.30.2
+

@@ -1,0 +1,30 @@
+From a604213967d312948a2785b91f91532bfd7408eb Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 19 Jul 2022 01:12:17 +0000
+Subject: [PATCH 36/68] third_party: libzip: resolve macro redefined issue
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ third_party/libzip/src/lib/compat.h | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/third_party/libzip/src/lib/compat.h b/third_party/libzip/src/lib/compat.h
+index d88be1aa344e..2ea8766db7fd 100644
+--- a/third_party/libzip/src/lib/compat.h
++++ b/third_party/libzip/src/lib/compat.h
+@@ -184,12 +184,4 @@ typedef char bool;
+ #endif
+ #endif
+ 
+-#ifndef S_ISDIR
+-#define S_ISDIR(mode) (((mode)&S_IFMT) == S_IFDIR)
+-#endif
+-
+-#ifndef S_ISREG
+-#define S_ISREG(mode) (((mode)&S_IFMT) == S_IFREG)
+-#endif
+-
+ #endif /* compat.h */
+-- 
+2.30.2
+

@@ -1,0 +1,26 @@
+From 5e7bb8ea6677499ca1d6e2ed2292c5991d75a0a0 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Wed, 2 Nov 2022 22:28:38 -0400
+Subject: [PATCH 67/68] third_party: breakpad: include missing minidump_format
+ header
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ third_party/breakpad/BUILD.gn | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/third_party/breakpad/BUILD.gn b/third_party/breakpad/BUILD.gn
+index 9e1f426e756f..cbed2a4162d1 100644
+--- a/third_party/breakpad/BUILD.gn
++++ b/third_party/breakpad/BUILD.gn
+@@ -651,6 +651,7 @@ if (is_linux || is_chromeos || is_android) {
+       "breakpad/src/common/simple_string_dictionary.h",
+       "breakpad/src/common/string_conversion.cc",
+       "breakpad/src/common/string_conversion.h",
++      "breakpad/src/google_breakpad/common/minidump_format.h",
+     ]
+ 
+     configs -= [ "//build/config/compiler:chromium_code" ]
+-- 
+2.30.2
+

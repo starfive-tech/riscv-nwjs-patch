@@ -1,0 +1,66 @@
+From 3e7d039c75f70508476a4a47bf4b6fd2dd9ffdbd Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Mon, 12 Sep 2022 03:16:51 -0400
+Subject: [PATCH 63/68] Revert "tools: perf: chrome_telemetry_build: remove
+ dependency to breakpad"
+
+This reverts commit 21c5250300bc80dc58bd1da53554950ba1c221cd.
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ tools/perf/chrome_telemetry_build/BUILD.gn | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/tools/perf/chrome_telemetry_build/BUILD.gn b/tools/perf/chrome_telemetry_build/BUILD.gn
+index d782d15bc70e..2d6c25ea2d0b 100644
+--- a/tools/perf/chrome_telemetry_build/BUILD.gn
++++ b/tools/perf/chrome_telemetry_build/BUILD.gn
+@@ -46,6 +46,8 @@ group("telemetry_chrome_test") {
+   }
+ 
+   if (is_linux || is_chromeos) {
++    data_deps += [ "//third_party/breakpad:dump_syms($host_toolchain)" ]
++
+     # CrOS currently has issues with the locally compiled version of
+     # crashpad_database_util, so only include it on traditional Linux
+     # platforms.
+@@ -59,6 +61,7 @@ group("telemetry_chrome_test") {
+     data_deps += [
+       "//chrome:chrome_framework",
+       "//chrome:chrome_helper_app_default",
++      "//third_party/breakpad:dump_syms",
+       "//third_party/crashpad/crashpad/tools:crashpad_database_util",
+     ]
+   }
+@@ -198,6 +201,7 @@ group("telemetry_chrome_test_without_chrome") {
+ 
+   data = [
+     "//build/android/pylib/",  # chromium_config.py uses pylib to look for Java
++    "//components/crash/content/tools/generate_breakpad_symbols.py",
+     "//tools/perf/chrome_telemetry_build/",
+     "//tools/perf/core/",  # chrome_telemetry_build/ depends on core/
+   ]
+@@ -207,6 +211,20 @@ group("telemetry_chrome_test_without_chrome") {
+     "//tools/metrics:metrics_python_tests",
+   ]
+ 
++  # Cr-Fuchsia doesn't support breakpad.
++  if (!is_win && !is_fuchsia) {
++    data_deps += [
++      # This is defined for Windows, but is unused by Telemetry on
++      # Windows, and including it can have issues when cross-compiling
++      # for Arm-based Windows.
++      "//third_party/breakpad:dump_syms",
++
++      # These explicitly not defined for Windows builds in Breakpad.
++      "//third_party/breakpad:minidump_dump",
++      "//third_party/breakpad:minidump_stackwalk",
++    ]
++  }
++
+   if (is_mac) {
+     data += [
+       # Required for the hermetic otool binary, which is required for
+-- 
+2.30.2
+

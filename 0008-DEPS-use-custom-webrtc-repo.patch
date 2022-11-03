@@ -1,0 +1,26 @@
+From b987185ecbd32987e138d9713330151decbc1e51 Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 02:27:35 -0400
+Subject: [PATCH 08/68] DEPS: use custom webrtc repo
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 803b2866857d..f90dee1c598b 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1736,7 +1736,7 @@ deps = {
+     Var('chromium_git') + '/external/github.com/gpuweb/cts.git' + '@' + '958d732db02c2a70bcf4a2b0986f09318db4adfb',
+ 
+   'src/third_party/webrtc':
+-    Var('webrtc_git') + '/src.git' + '@' + '6ff73180ad01aca444c9856f91148eb2b948ce63',
++    Var('reb_git') + '/src.git' + '@' + 'c684f18ebe97ea76aa2c8823138982df070de782',
+ 
+   'src/third_party/libgifcodec':
+      Var('skia_git') + '/libgifcodec' + '@'+  Var('libgifcodec_revision'),
+-- 
+2.30.2
+

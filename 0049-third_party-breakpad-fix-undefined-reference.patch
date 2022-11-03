@@ -1,7 +1,7 @@
-From 781831c1fa90eaaaefd37847b607a56a92973502 Mon Sep 17 00:00:00 2001
+From 703b9ebf14da035efa1ca4bad7b807a407fb81e0 Mon Sep 17 00:00:00 2001
 From: Tien Hock Loh <tienhock.loh@starfivetech.com>
 Date: Fri, 12 Aug 2022 03:28:05 +0000
-Subject: [PATCH 49/51] third_party: breakpad: fix undefined reference
+Subject: [PATCH 49/68] third_party: breakpad: fix undefined reference
 
 Signed-off-by: Tien Hock Loh <tienhock.loh@starfivetech.com>
 ---
@@ -22,5 +22,5 @@ index 48defa6ef092..9e1f426e756f 100644
        "breakpad/src/client/minidump_file_writer-inl.h",
        "breakpad/src/client/minidump_file_writer.cc",
 -- 
-2.25.1
+2.30.2
 

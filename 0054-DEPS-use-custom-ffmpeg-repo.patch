@@ -1,0 +1,26 @@
+From 74b7597511288a23c63814691ceb4c23613e904a Mon Sep 17 00:00:00 2001
+From: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+Date: Tue, 6 Sep 2022 05:03:34 -0400
+Subject: [PATCH 54/68] DEPS: use custom ffmpeg repo
+
+Signed-off-by: Rebecca Chang Swee Fun <rebecca.chang@starfivetech.com>
+---
+ DEPS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/DEPS b/DEPS
+index 92a3f3722582..8c45e0940383 100644
+--- a/DEPS
++++ b/DEPS
+@@ -1157,7 +1157,7 @@ deps = {
+     Var('chromium_git') + '/external/github.com/google/farmhash.git' + '@' + '816a4ae622e964763ca0862d9dbd19324a1eaf45',
+ 
+   'src/third_party/ffmpeg':
+-    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'e481fc655a6287e657a88e8c2bcd6f411d254d70',
++    Var('reb_git') + '/chromium-ffmpeg.git' + '@' + 'c578f7ebdc5aeee643a4b4d241b3b2da4606bf1e',
+ 
+   'src/third_party/flac':
+     Var('chromium_git') + '/chromium/deps/flac.git' + '@' + 'af862024c8c8fa0ae07ced05e89013d881b00596',
+-- 
+2.30.2
+
