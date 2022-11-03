@@ -37,7 +37,7 @@ popd
 
 5. Run GN.
 ```
-gn gen out/nw --args='target_cpu="riscv64" target_os="linux" is_debug=false is_component_ffmpeg=true symbol_level=1 blink_symbol_level=0 use_gnome_keyring=false is_clang=true use_lld=false use_gold=false'
+gn gen out/nw --args='target_cpu="riscv64" target_os="linux" is_debug=false is_component_ffmpeg=true symbol_level=1 blink_symbol_level=0 use_gnome_keyring=false is_clang=true use_lld=false use_gold=false is_component_build=false'
 ```
 
 6. Build the llvm/clang for RISCV.
@@ -49,8 +49,7 @@ popd
 
 7. Configure for NW.js.
 ```
-export GYP_DEFINES="target_arch=riscv64"
-GYP_CHROMIUM_NO_ACTION=0 ./build/gyp_chromium -I third_party/node-nw/common.gypi -D building_nw=1 -D clang=1 third_party/node-nw/node.gyp
+GYP_CHROMIUM_NO_ACTION=0 ./build/gyp_chromium -I third_party/node-nw/common.gypi -D building_nw=1 -D clang=1 third_party/node-nw/node.gyp -D target_arch=riscv64 -D nwjs_sdk=1 -D disable_nacl=0 -D buildtype=Official
 ```
 
 8. Start ninja-build.
@@ -62,6 +61,22 @@ ninja -C out/nw nwjs -j128 -k0
 ```
 ninja -C out/Release node -k0
 ninja -C out/nw copy_node
+```
+
+10. Build optional features, i.e. chromedriver, browser_tests, etc.
+```
+ninja -C out/nw chromedriver
+
+ninja -C out/nw browser_tests
+
+ninja -C out/nw -t clean v8:nwjc
+ninja -C out/nw v8:nwjc
+
+ninja -C out/nw minidump_stackwalk
+
+ninja -C out/nw third_party/breakpad:dump_syms
+
+ninja -C out/nw dist
 ```
 
 
